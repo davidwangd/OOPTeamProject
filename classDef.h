@@ -30,6 +30,7 @@ class Token{
 	// 返回一个可以用于hash的值
 	// 如果Equal Value就相同
 	// 如果ApproximateEqual, ApproximateValue就相同。
+	// 这里是用来帮助hash的
 	virtual int Value() const;
 	virtual int ApproximateValue() const; 
 	Language GetLanguage() const;
