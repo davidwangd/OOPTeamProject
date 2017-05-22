@@ -1,4 +1,7 @@
-// A enumerate type of language 
+#ifndef OOPTEAMWORK_CLASSDEF_H_
+#define OOPTEAMWORK_CLASSDEF_H_
+
+// A enumerate type of language
 enum Language{
 	CPP,
 	Java,
@@ -32,7 +35,7 @@ class Token{
 	// 如果ApproximateEqual, ApproximateValue就相同。
 	// 这里是用来帮助hash的
 	virtual int Value() const;
-	virtual int ApproximateValue() const; 
+	virtual int ApproximateValue() const;
 	Language GetLanguage() const;
 };
 
@@ -53,11 +56,11 @@ class CPPtokenizer : public Tokenizer{
 class Analyser{
 	Analyser();
 	// 检验两个Token列表， 返回抄袭可能性
-	// 实现见Papar..
+	// 实现见Paper..
 	double check(const vector<Token *>&, const vector<Token *>&);
 };
 
-// 一个 Dectectory
+// 一个 Detector
 class PlagiarismDetector{
 	PlagiarismDector(Language lan);
 	double check(const char *path1, const char *path2);
@@ -68,3 +71,5 @@ class PlagiarismDetector{
 class CPPPlagiarismDetector : public PlagiarismDector{
 
 };
+
+#endif /* end of include guard: OOPTEAMWORK_CLASSDEF_H_ */
