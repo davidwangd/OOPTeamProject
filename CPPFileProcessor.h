@@ -10,7 +10,7 @@
 #include <string>
 
 /// 这是用于处理C++源代码的Processor类
-class CPPFileProcessor final: public FileProcessor{
+class CPPFileProcessor{
 public:
 	/// 默认构造函数对类进行初始化，实际上不进行任何操作。
     CPPfileProcessor() { }

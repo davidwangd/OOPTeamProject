@@ -1,10 +1,6 @@
 #ifndef OOP_TEAMWORK_CLASSDEF_H
 #define OOP_TEAMWORK_CLASSDEF_H
 
-#include <vector>
-#include <map>
-#include <utility>
-
 // A enumerate type of language
 enum Language{
 	CPP,
@@ -26,10 +22,20 @@ public:
 	virtual Language GetLanguage() const;
 };
 
-class CPPFileProcessor;
+class CPPfileProcessor final: public FileProcessor{
+public:
+	CPPfileProcessor();
+	~CPPfileProcessor();
+	const char *process(const char *pathname);
+	Language GetLanguage() const { return CPP; }
+
+private:
+	//TODO
+};
 
 class Token{
 	// 检测Token是否相同
+	virtual ~Token();
 	virtual int ApproximateEqual(const Token *other) const;
 	virtual int Equal(const Token *other) const;
 	// 返回一个可以用于hash的值
@@ -44,9 +50,9 @@ class Token{
 class Tokenizer{
 	Tokenizer();
 	// 处理经过FileProccessor处理过的源代码
-	void process(const char *source);
+	virtual vector<const Token*> process(const char *source);
 	// 获得Tokens
-	virtual std::vector<Token*> GetTokens() const;
+	virtual vector<const Token*> GetTokens() const;
 	Language GetLanguage() const;
 };
 
