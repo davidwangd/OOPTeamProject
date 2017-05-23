@@ -19,7 +19,7 @@ public:
 	// 该类将持有所有process产生的字符串，函数析构的时候释放所有。
 	// 可能会被调用多次。。
 	virtual const char *process(const char *pathname) = 0;
-	Language GetLanguage() const;
+	virtual Language GetLanguage() const;
 };
 
 class CPPfileProcessor final: public FileProcessor{
@@ -56,7 +56,7 @@ class Tokenizer{
 	Language GetLanguage() const;
 };
 
-class CPPtokenizer : public Tokenizer{
+class CPPTokenizer : public Tokenizer{
 
 };
 
@@ -65,14 +65,14 @@ class Analyser{
 	Analyser();
 	// 检验两个Token列表， 返回抄袭可能性
 	// 实现见Paper..
-	double check(const vector<Token *>&, const vector<Token *>&);
+	double check(const std::vector<Token *>&, const std::vector<Token *>&);
 };
 
 // 一个 Detector
 class PlagiarismDetector{
 	PlagiarismDector(Language lan);
 	double check(const char *path1, const char *path2);
-	map<pair<int, int>, double> check(const char *paths[]);
+	std::map<std::pair<int, int>, double> check(const char *paths[]);
 };
 
 // 使用以上所有类。。最后实现。。。。
