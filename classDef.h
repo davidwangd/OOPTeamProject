@@ -1,6 +1,10 @@
 #ifndef OOP_TEAMWORK_CLASSDEF_H
 #define OOP_TEAMWORK_CLASSDEF_H
 
+#include <vector>
+#include <map>
+#include <utility>
+
 // A enumerate type of language
 enum Language{
 	CPP,
@@ -19,19 +23,10 @@ public:
 	// 该类将持有所有process产生的字符串，函数析构的时候释放所有。
 	// 可能会被调用多次。。
 	virtual const char *process(const char *pathname) = 0;
-	Language GetLanguage() const;
+	virtual Language GetLanguage() const;
 };
 
-class CPPfileProcessor final: public FileProcessor{
-public:
-	CPPfileProcessor();
-	~CPPfileProcessor();
-	const char *process(const char *pathname);
-	Language GetLanguage() const { return CPP; }
-
-private:
-	//TODO
-};
+class CPPFileProcessor;
 
 class Token{
 	// 检测Token是否相同
@@ -51,11 +46,11 @@ class Tokenizer{
 	// 处理经过FileProccessor处理过的源代码
 	void process(const char *source);
 	// 获得Tokens
-	virtual vector<Token*> GetTokens() const;
+	virtual std::vector<Token*> GetTokens() const;
 	Language GetLanguage() const;
 };
 
-class CPPtokenizer : public Tokenizer{
+class CPPTokenizer : public Tokenizer{
 
 };
 
@@ -64,14 +59,14 @@ class Analyser{
 	Analyser();
 	// 检验两个Token列表， 返回抄袭可能性
 	// 实现见Paper..
-	double check(const vector<Token *>&, const vector<Token *>&);
+	double check(const std::vector<Token *>&, const std::vector<Token *>&);
 };
 
 // 一个 Detector
 class PlagiarismDetector{
 	PlagiarismDector(Language lan);
 	double check(const char *path1, const char *path2);
-	map<pair<int, int>, double> check(const char *paths[]);
+	std::map<std::pair<int, int>, double> check(const char *paths[]);
 };
 
 // 使用以上所有类。。最后实现。。。。
