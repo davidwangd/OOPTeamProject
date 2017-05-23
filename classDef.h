@@ -1,5 +1,5 @@
-#ifndef OOPTEAMWORK_CLASSDEF_H_
-#define OOPTEAMWORK_CLASSDEF_H_
+#ifndef OOP_TEAMWORK_CLASSDEF_H
+#define OOP_TEAMWORK_CLASSDEF_H
 
 // A enumerate type of language
 enum Language{
@@ -22,8 +22,15 @@ public:
 	Language GetLanguage() const;
 };
 
-class CPPfileProcessor: public FileProcessor{
+class CPPfileProcessor final: public FileProcessor{
+public:
+	CPPfileProcessor();
+	~CPPfileProcessor();
+	const char *process(const char *pathname);
+	Language GetLanguage() const { return CPP; }
 
+private:
+	//TODO
 };
 
 class Token{
@@ -72,4 +79,4 @@ class CPPPlagiarismDetector : public PlagiarismDector{
 
 };
 
-#endif /* end of include guard: OOPTEAMWORK_CLASSDEF_H_ */
+#endif /* end of include guard: OOP_TEAMWORK_CLASSDEF_H */
