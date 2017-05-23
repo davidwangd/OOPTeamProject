@@ -42,9 +42,9 @@ class Token{
 class Tokenizer{
 	Tokenizer();
 	// 处理经过FileProccessor处理过的源代码
-	void process(const char *source);
+	virtual vector<const Token*> process(const char *source);
 	// 获得Tokens
-	virtual vector<Token*> GetTokens() const;
+	virtual vector<const Token*> GetTokens() const;
 	Language GetLanguage() const;
 };
 
