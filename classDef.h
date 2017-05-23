@@ -35,6 +35,7 @@ private:
 
 class Token{
 	// 检测Token是否相同
+	virtual ~Token();
 	virtual int ApproximateEqual(const Token *other) const;
 	virtual int Equal(const Token *other) const;
 	// 返回一个可以用于hash的值
