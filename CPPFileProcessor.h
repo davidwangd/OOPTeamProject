@@ -1,5 +1,5 @@
-#ifndef OOP_TEAMWORK_UTILS_CPPFILEPROCESSOR_H
-#define OOP_TEAMWORK_UTILS_CPPFILEPROCESSOR_H
+#ifndef OOP_TEAMWORK_CPPFILEPROCESSOR_H
+#define OOP_TEAMWORK_CPPFILEPROCESSOR_H
 
 // coder : gaoj
 
@@ -29,4 +29,4 @@ private:
 	std::set<std::string> Strings;
 };
 
-#endif /* end of include guard: OOP_TEAMWORK_UTILS_CPPFILEPROCESSOR_H */
+#endif /* end of include guard: OOP_TEAMWORK_CPPFILEPROCESSOR_H */
