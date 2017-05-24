@@ -104,7 +104,7 @@ const char* CPPFileProcessor::process(const char* pathname)
 	//正确性有待测试
 
 #ifdef DEBUG
-	ofstream _fout;
+	ofstream _fout("Processed.cxx");
 	fout << Processed;
 	_fout.close();
 #endif
