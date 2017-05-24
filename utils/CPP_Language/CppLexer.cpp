@@ -56,7 +56,7 @@ namespace CPPLanguage{
 		cppTokenMatchers[EndFcn].setPattern(string("}")); // Fcn
 		cppTokenMatchers[Namespace].setPattern(string("::")); // Namespace
 		cppTokenMatchers[Operator].setPattern(string("@++@*+@?+@/+->+-+:+%+&&+&+||+|+^")); // Operator
-		cppTokenMatchers[Number].setPattern(string("0+[1-9][0-9]*((e+E)[0-9]!)?(l?+(ll)?+L?+(LL)?+(ld)?+(LD)?+f?+F?)+[0-9]*.[0-9]*((e+E)[0-9]!)?"));
+		cppTokenMatchers[Number].setPattern(string("0+[1-9][0-9]*((e+E)[0-9]!)?(l?+(ll)?+L?+(LL)?+(ld)?+(LD)?+f?+F?)+[0-9]*.[0-9]*((e+E)[0-9]!)?f?"));
 		cppTokenMatchers[String].setPattern(string("\"[\"]*\"+'[']*'"));
 		cppTokenMatchers[Assignment].setPattern(string("=+@+=+-=+@*=+@/=+%=")); // Assignment
 		cppTokenMatchers[OpenBracket].setPattern(string("["));

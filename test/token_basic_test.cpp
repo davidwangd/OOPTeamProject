@@ -1,7 +1,7 @@
 // author : davidawng
 #include "../token_basic.h"
 using namespace std;
-
+ 
 char buff[10000];
 Tokenizer *tokenizer = new Tokenizer();
 int main(){

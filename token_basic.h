@@ -8,7 +8,7 @@ class Token{
 public:
 	virtual ~Token() = default;
 	Token() = default;
-	Token(char c): c(c){}
+	Token(char c): c(c){} 
 	virtual int ApproximateEqual(const Token *other) const { return this -> c == other -> c; }
 	virtual int Equal(const Token *other) const { return this -> c == other -> c;}
 	virtual int Value() const { return this -> c; }
