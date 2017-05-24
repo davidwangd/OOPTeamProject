@@ -13,23 +13,19 @@
 class FileDependencyGraph
 {
 public:
-	FileDependencyGraph();
+	FileDependencyGraph()  { }
 	void AddFile(const char* FileName);
+	void BuildGraph();
 	void ComputeDependencies(const char* FileName);
-	std::vector<const FileNode*>::const_iterator begin() const {
-		return Topological.begin();
-	}
-	std::vector<const FileNode*>::const_iterator end() const {
-		return Topological.end();
-	}
+	
+#ifdef DEBUG
+	void PrintGraph();
+#endif
 
 private:
-	int NodeCount;
 	std::vector<std::string> FileNodes;
 	std::vector<std::vector<int> > Dependency;
-	std::vector<int> InDeg;
-
-	std::vector<const FileNode*> Topological;
+	std::vector<std::string> Topological;
 };
 
 #endif /* end of include guard: OOP_TEAMWORK_UTILS_DEPENDENCY_H */
