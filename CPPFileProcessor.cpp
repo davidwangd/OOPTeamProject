@@ -5,10 +5,10 @@
 
 #include <ctime>
 #include <cstdlib>
-#include <iostream>
 #include <fstream>
 #include <sstream>
 #include <io.h>
+#include <cstdio>
 #include <cstring>
 
 using namespace std;
@@ -73,6 +73,17 @@ vector<string> GetCPPSources(const char* pathname)
 	return sources;
 }
 
+string ExtendTypedefs(string& source)
+{
+	//TODO
+	return source;
+}
+string ExtendConsts(string& source)
+{
+	//TODO
+	return source;
+}
+
 const char* CPPFileProcessor::process(const char* pathname)
 {
 	auto FileList = GetCPPSources(pathname);
@@ -83,5 +94,23 @@ const char* CPPFileProcessor::process(const char* pathname)
 		dg.AddFile(FileName);
 	dg.BuildGraph();
 	dg.MergeAll(TmpFile);
-	return NULL;
+
+	string _Command = "g++ -E " + TmpFile;
+	string Processed;
+	FILE* proc = popen(_Command.c_str(), "r");
+	char buf[1024] = {0};
+	while (fgets(buf, 1024, proc) != NULL)
+		Processed = Processed + string(buf);
+	//正确性有待测试
+
+#ifdef DEBUG
+	ofstream _fout;
+	fout << Processed;
+	_fout.close();
+#endif
+
+	Processed = ExtendTypedefs(source);
+	Processed = ExtendConsts(source);
+	String.push_back(Processed);
+	return Processed.c_str();
 }
