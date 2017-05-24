@@ -1,7 +1,6 @@
 // coder : gaoj
 
 #include "../utils/dependency.h"
-#include <fstream>
 #include <sstream>
 #include <queue>
 #include <algorithm>
@@ -10,15 +9,16 @@
 
 using namespace std;
 
-void FileDependencyGraph::AddFile(const char* filename)
+void FileDependencyGraph::AddFile(const char* FileName)
 {
-	FileNodes.push_back(string(filename));
+	FileNodes.push_back(string(FileName));
 }
 
 void FileDependencyGraph::BuildGraph()
 {
 	int n = FileNodes.size();
 	Dependency.resize(n);
+	InDeg.assign(n, 0);
 
 	for (int i = 0; i < n; ++i)
 	{
@@ -29,9 +29,12 @@ void FileDependencyGraph::BuildGraph()
 			if (FileNodes[i][len - j - 1] == '/')
 				break;
 		string Directory = FileNodes[i].substr(0, len - j);
+
+		int Line = 0;
 		while (fin)
 		{
 			getline(fin, buf);
+			++Line;
 			if (!fin)
 				break;
 			stringstream ss;
@@ -50,44 +53,48 @@ void FileDependencyGraph::BuildGraph()
 						break;
 				if (j == FileNodes.size())
 					throw "gaoj, dependency.cpp: unexpected error at BuildGraph";
-				Dependency[i].push_back(j);
+				AddEdge(i, j, Line);
 			}
 		}
 		fin.close();
 	}
 }
 
-void FileDependencyGraph::ComputeDependencies(const char* filename)
+void FileDependencyGraph::Extend(ofstream& os, int v)
 {
-	Topological.clear();
+	ifstream fin(FileNodes[v]);
+	string buf, tmp;
 
-	string Target(filename);
-	int v = 0, n = FileNodes.size();
-	for (; v < n; ++v)
-		if (FileNodes[v] == Target)
-			break;
-	if (v == n)
-		throw "gaoj, dependency.cpp: unexpected error at ComputeDependencies";
-
-	queue<int> Q;
-	vector<bool> vis;
-	vis.assign(n, false);
-	Q.push(v);
-	vis[v] = true;
-	while (!Q.empty())
+	int Line = 0, i = 0, n = Dependency[v].size();
+	while (fin)
 	{
-		int u = Q.front();
-		Q.pop();
-		Topological.push_back(FileNodes[u]);
-
-		for (int w : Dependency[u])
-			if (!vis[w])
+		getline(fin, buf);
+		++Line;
+		if (!fin)
+			break;
+		if (i < n)
+			if (Dependency[v][i].LineNo == Line)
 			{
-				Q.push(w);
-				vis[w] = true;
+				Extend(os, Dependency[v][i].To);
+				++i;
+				continue;
 			}
+		stringstream ss;
+		ss << buf;
+		ss >> tmp;
+		if (tmp != "#include")
+			os << buf << endl;
 	}
-	reverse(Topological.begin(), Topological.end());
+	fin.close();
+}
+
+void FileDependencyGraph::MergeAll(const char* StoreTo)
+{
+	ofstream fout(StoreTo);
+	for (int i = 0; i < FileNodes.size(); ++i)
+		if (InDeg[i] == 0)
+			Extend(fout, i);
+	fout.close();
 }
 
 #ifdef DEBUG
@@ -96,8 +103,8 @@ void FileDependencyGraph::PrintGraph()
 	for (int i = 0; i < FileNodes.size(); ++i)
 	{
 		cerr << "File #" << i << ": " << FileNodes[i] << endl;
-		for (int j : Dependency[i])
-			cerr << " - depends on: " << FileNodes[j] << endl;
+		for (Edge j : Dependency[i])
+			cerr << " - (line "<< j.LineNo << ") depends on: " << FileNodes[j.To] << endl;
 		cerr << endl;
 	}
 }

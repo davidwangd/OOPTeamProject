@@ -9,23 +9,37 @@
 
 #include <vector>
 #include <string>
+#include <fstream>
+
+struct Edge
+{
+	int LineNo, To;
+	Edge(int LineNo = -1, int To = -1) : LineNo(LineNo), To(To) { }
+};
 
 class FileDependencyGraph
 {
 public:
-	FileDependencyGraph()  { }
+	FileDependencyGraph() { }
 	void AddFile(const char* FileName);
 	void BuildGraph();
-	void ComputeDependencies(const char* FileName);
-	
+	void MergeAll(const char* StoreTo);
+
 #ifdef DEBUG
 	void PrintGraph();
 #endif
 
 private:
 	std::vector<std::string> FileNodes;
-	std::vector<std::vector<int> > Dependency;
-	std::vector<std::string> Topological;
+	std::vector<std::vector<Edge> > Dependency;
+	std::vector<int> InDeg;
+
+	void AddEdge(int u, int v, int Line)
+	{
+		Dependency[u].push_back(Edge(Line, v));
+		++InDeg[v];
+	}
+	void Extend(std::ofstream& os, int v);
 };
 
 #endif /* end of include guard: OOP_TEAMWORK_UTILS_DEPENDENCY_H */
