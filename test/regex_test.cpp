@@ -7,10 +7,11 @@
 
 using namespace std;
 int main(){
+	char buff[100000];
 	string s, t;
 	cin >> s;
 	Regex::RE now(s);
-	while (cin >> t){
-		printf("%d\n", now.match(t));
+	while (gets(buff)){
+		printf("%d\n", now.match(string(buff)));
 	}
 }
