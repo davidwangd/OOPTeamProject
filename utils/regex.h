@@ -67,11 +67,17 @@ namespace Regex{
 
 	class RE{	
 	public:
+		RE() = default;
 		RE(const std::string &s);
+		RE(const char *str): RE(std::string(str)){}
 		~RE();
+		std::string getPattern(){ return orin; }
+		void setPattern(const std::string &s);
 		int match(const std::string &s){ return dfa.match(s); }
 		int match(const std::string &s,int l, int r = -1){ return dfa.match(s,l,r); }
 	private:
+		RE& operator=(const RE&) { return *this; }
+		RE(const RE&) {}
 		std::string orin;
 		DFA dfa;
 		NFA nfa;

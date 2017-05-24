@@ -108,12 +108,12 @@ namespace Regex{
 		if (r-l+1 == 2 && s[l] == TransCharacter){
 			ret.start = new NFANode(0);
 			ret.end = new NFANode(1);
-			if (!isalpha(s[l])){
+			if (!isalpha(s[r])){
 				ret.start -> trans[s[l+1]] = ret.end;
 			}else{
-				if (s[l] == 't') ret.start -> trans['\t'] = ret.end;
-				else if (s[l] == 'n') ret.start -> trans['\n'] = ret.end;
-				else if (s[l] == 'b') ret.start -> trans[' '] = ret.end;
+				if (s[r] == 't') ret.start -> trans['\t'] = ret.end;
+				else if (s[r] == 'n') ret.start -> trans['\n'] = ret.end;
+				else if (s[r] == 'b') ret.start -> trans[' '] = ret.end;
 			}
 			return ret;
 		}
@@ -182,9 +182,10 @@ namespace Regex{
 			}
 
 			if (s[i] == '+'){
-				cur.Union(build(s, i+1, r));
+				ret.Link(cur);
+				ret.Union(build(s, i+1, r));
 				i = r;
-				continue;
+				return ret;
 			}else{
 				ret.Link(cur);
 				cur = build(s, i, i);
@@ -278,21 +279,24 @@ namespace Regex{
 	int DFA::match(const std::string &s,int l,int r){
 		DFANode *now = start;
 		int pre = -1;
-		for (int i = l;i < r || (r == -1 && i < s.length());i++){
+		int i;
+		for (i = l;i < r || (r == -1 && i < s.length());i++){
 			if (now->trans.find(s[i]) == now -> trans.end()) return pre;
 			now = now -> trans[s[i]];
 			if (now -> accept) pre = i;
 		}
-		return now->accept;
+		return pre;
 	}	
 
 	void NFA::clearMem(){
 		queue<NFANode *> q;
 		set<NFANode *> s;
+		if (this -> start == nullptr || this -> start == nullnfa) return;
 		q.push(this -> start);
 		s.insert(this -> start);
 		while (!q.empty()){
 			NFANode *cur = q.front();
+			if (cur == nullnfa) continue;
 			q.pop();
 			for (auto &trans : cur -> trans){
 				if (!s.count(trans.second)){
@@ -308,12 +312,14 @@ namespace Regex{
 			}
 		}
 		for (auto node: s){
-			delete node;
+			if (node != nullnfa)
+				delete node;
 		}
 		start = end = nullnfa;
 	}
 
 	void DFA::clearMem(){
+		if (this -> start == nullptr || this -> start == nulldfa) return;
 		queue<DFANode *> q;
 		set<DFANode *> s;
 		q.push(this -> start);
@@ -329,7 +335,8 @@ namespace Regex{
 			}
 		}
 		for (auto node: s){
-			delete node;
+			if (node != nulldfa)
+				delete node;
 		}
 		start = nulldfa;
 	}
@@ -344,6 +351,25 @@ namespace Regex{
 	#ifdef DEBUG
 		dfa.show();
 	#endif
+		nfa.clearMem();
+		nfa2dfa.clear();
+		dfa2nfa.clear();
+	}
+
+	void RE::setPattern(const std::string &s){
+		dfa.clearMem();
+		nfa.clearMem();
+
+		orin = s;
+		nfa = build(s, 0, s.length() - 1);
+	#ifdef DEBUG
+		nfa.show();
+	#endif
+		dfa = DFA(nfa);
+	#ifdef DEBUG
+		dfa.show();
+	#endif
+		nfa.clearMem();
 		nfa2dfa.clear();
 		dfa2nfa.clear();
 	}
