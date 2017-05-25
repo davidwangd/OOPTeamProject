@@ -6,8 +6,8 @@
 
 namespace CPPLanguage{
 	enum TokenType{
-		ControlWord,
-		TypeDef,
+		ControlWord = 0,
+		TypeDef = 1,
 		KeyWord,
 		Identifier,
 		Blank,

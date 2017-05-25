@@ -5,13 +5,17 @@
 
 #include "utils/regex.h"
 #include "utils/CPP_Language/CppLexer.h"
-#include "basic_token.h"
+#include "token_basic.h"
+#include <string>
+#include <vector>
+#include <map>
+
 
 // CPPToken type.. 
 class CPPToken : public Token{
 public:
 	// type and id is provided when TokenType is Identifier.. before the first declaration of the identifier..
-	CPPToken(std::pair<CPPLanguage::TokenType, std::string> type, string idtype = string(""), int id = -1);
+	CPPToken(std::pair<CPPLanguage::TokenType, std::string> type, std::string idtype = std::string(""), int id = -1);
 	virtual int Equal() const ;
 	virtual int ApproximateEqual() const;
 	virtual int Value() const;

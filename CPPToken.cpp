@@ -1,14 +1,15 @@
 // coder : davidwang
 #include "CPPToken.h"
+#include <memory.h>
 using namespace std;
 using namespace CPPLanguage;
 
 int CPPToken::MaxId = -1;
 
-vector<pair<TokenType, string>> CPPTokenizer::process(const char *source){
+vector<const Token *> CPPTokenizer::process(const char *source){
 	lexer.Register(source);
 
-	while (!lexer.finsih()){
+	while (!lexer.finish()){
 		auto ret = lexer.GetNextToken();
 		// for Blank, We simply Drop them
 		if (ret.first == Blank){
@@ -20,7 +21,7 @@ vector<pair<TokenType, string>> CPPTokenizer::process(const char *source){
 		// clear () and all the information init
 		if (ret.first == CloseParentheses){
 			int flag = 0;
-			while (Stack.top().first != OpenParenttheses){
+			while (Stack.top().first != OpenParentheses){
 				Stack.pop();
 			}
 			Stack.pop();
@@ -62,21 +63,21 @@ vector<pair<TokenType, string>> CPPTokenizer::process(const char *source){
 				string t;
 				if (Stack.top().first == TypeDef){
 					t = Stack.top().second;
-				}else if (Stack.top().second == "class" || Stack.top.second == "struct"){
+				}else if (Stack.top().second == "class" || Stack.top().second == "struct"){
 					// class Name
 					t = string("typename");
 				}else if (Stack.top().second == "namespace"){
 					t = string("namespace");
 				}else if (Stack.top().first == Identifier){
 					// Identifier, this means that its a class type
-					t = to_string(id2int(Stack.top.second));
+					t = to_string(id2int[Stack.top().second]);
 				}
 				t = t + " ptr" + to_string(ptr) + "ptr";
 
 				while (lexer.LookAhead().first == Blank) lexer.GetNextToken();
 				auto nextToken = lexer.LookAhead();
 				// function checker...
-				if (nextToken.first == OpenParenttheses){
+				if (nextToken.first == OpenParentheses){
 					t = t + " fcn";
 				}else{
 					t = t + " ins";
@@ -96,7 +97,7 @@ vector<pair<TokenType, string>> CPPTokenizer::process(const char *source){
 		if (ret.first == CloseBrace){
 			while (Stack.top().second != "{") Stack.pop();
 			// to the current CloseType.... 
-			ret.first = Stack.top().first + 1;
+			ret.first = (TokenType)((int)Stack.top().first + 1);
 			Stack.pop();
 			continue;
 		}
@@ -110,7 +111,7 @@ vector<pair<TokenType, string>> CPPTokenizer::process(const char *source){
 			// Begin End for Control words...
 			if (Stack.top().first == ControlWord){
 				if (Stack.top().second == "if" || Stack.top().second == "switch" || Stack.top().second == "else") ret.first = BeginIf;
-				if (Stack.top().second == "for" || Stack.top().second == "do" || Stack.second == "while") ret.first = BeginLoop;
+				if (Stack.top().second == "for" || Stack.top().second == "do" || Stack.top().second == "while") ret.first = BeginLoop;
 				Stack.pop();
 				continue;
 			}
@@ -123,7 +124,7 @@ vector<pair<TokenType, string>> CPPTokenizer::process(const char *source){
 				memset(buff2, 0, sizeof(buff2));
 				memset(buff3, 0, sizeof(buff3));
 				
-				sscanf(idType[id2int[Stack.top().second]], "%s%s%s", buff1, buff2, buff3);
+				sscanf(idType[id2int[Stack.top().second]].c_str(), "%s%s%s", buff1, buff2, buff3);
 				if (!strcmp(buff1, "typename")){
 					ret.first = BeginClass;
 				}else if (!strcmp(buff3, "fcn")){
@@ -138,4 +139,5 @@ vector<pair<TokenType, string>> CPPTokenizer::process(const char *source){
 
 		tokens.push_back(new CPPToken(ret));
 	}
+	return tokens;
 }
