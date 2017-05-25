@@ -13,6 +13,8 @@ public:
 	virtual int Equal(const Token *other) const { return this -> c == other -> c;}
 	virtual int Value() const { return this -> c; }
 	virtual int ApproximateValue() const { return this -> c;} 
+	virtual int MaxValue() const { return 128; }
+	virtual int MaxApproximateValue() const { return 128; }
 private:
 	char c;
 };
