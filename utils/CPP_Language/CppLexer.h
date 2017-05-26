@@ -1,6 +1,8 @@
 #ifndef OOP_TEAMPROJECT_CPPLEXER_H
 #define OOP_TEAMPROJECT_CPPLEXER_H
 
+// coder : davidwang
+
 #include <stack>
 #include <string>
 
@@ -37,6 +39,7 @@ namespace CPPLanguage{
 		CloseParentheses,
 		Semicolon, //; 
 		Comma, // ,
+		Dot,
 		cppTokenTypeCount
 	};
 
