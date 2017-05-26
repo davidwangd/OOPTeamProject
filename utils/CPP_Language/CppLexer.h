@@ -46,7 +46,7 @@ namespace CPPLanguage{
 	class Lexer{
 	public:
 		// Register a string
-		Lexer();
+		Lexer() : position(0){}
 		void Register(const char *source);
 		std::pair<TokenType, std::string> GetNextToken();
 		std::pair<TokenType, std::string> LookAhead();

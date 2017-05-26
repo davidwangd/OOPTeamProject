@@ -37,6 +37,9 @@ class CPPTokenizer : public Tokenizer {
 public:
 	CPPTokenizer(): Tokenizer(), cntId(0){}
 	virtual std::vector<const Token *> process(const char *source);
+	virtual std::vector<const Token *> GetTokens() const{
+		return tokens;
+	}
 private:
 	std::map<std::string, int> id2int;
 	// This stack is to implement a simple Pushdown-automata,

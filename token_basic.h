@@ -21,6 +21,7 @@ private:
 
 class Tokenizer{
 public:
+	Tokenizer() = default;
 	virtual std::vector<const Token *> process(const char *source){
 		tokens.clear();
 		for (int i = 0; source[i]; i++){
