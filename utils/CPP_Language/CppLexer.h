@@ -8,8 +8,8 @@
 
 namespace CPPLanguage{
 	enum TokenType{
-		ControlWord,
-		TypeDef,
+		ControlWord = 0,
+		TypeDef = 1,
 		KeyWord,
 		Identifier,
 		Blank,
@@ -21,6 +21,8 @@ namespace CPPLanguage{
 		EndLoop,
 		BeginClass,
 		EndClass,
+		BeginNamespace,
+		EndNamespace,
 		BeginIf,
 		EndIf,
 		BeginFcn,
@@ -47,9 +49,10 @@ namespace CPPLanguage{
 	class Lexer{
 	public:
 		// Register a string
-		Lexer();
+		Lexer() : position(0){}
 		void Register(const char *source);
 		std::pair<TokenType, std::string> GetNextToken();
+		std::pair<TokenType, std::string> LookAhead();
 		int finish() const;
 	private:
 		// To process the saved tokens

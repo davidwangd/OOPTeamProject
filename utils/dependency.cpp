@@ -9,6 +9,10 @@
 
 using namespace std;
 
+void FileDependencyGraph::AddFile(const string& FileName)
+{
+	FileNodes.push_back(FileName);
+}
 void FileDependencyGraph::AddFile(const char* FileName)
 {
 	FileNodes.push_back(string(FileName));

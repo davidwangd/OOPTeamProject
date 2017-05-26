@@ -22,6 +22,7 @@ class FileDependencyGraph
 public:
 	FileDependencyGraph() { }
 	void AddFile(const char* FileName);
+	void AddFile(const std::string& FileName);
 	void BuildGraph();
 	void MergeAll(const char* StoreTo);
 

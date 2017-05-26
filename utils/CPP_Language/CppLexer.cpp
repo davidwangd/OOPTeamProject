@@ -18,6 +18,8 @@ namespace CPPLanguage{
 		"EndLoop",
 		"BeginClass",
 		"EndClass",
+		"BeginNamespace",
+		"EndNamespace",
 		"BeginIf",
 		"EndIf",
 		"BeginFcn",
@@ -41,8 +43,8 @@ namespace CPPLanguage{
 	Lexer::Lexer(){
 		if (matchersOKflag) return;
 		matchersOKflag++;
-	 	cppTokenMatchers[ControlWord].setPattern(string("if+else+while+for+class")); // Control words
-		cppTokenMatchers[TypeDef].setPattern(string("int+float+double+long(@b+@n+@t)!double+long(@b+@n+@t)!long+unsigned(@b+@n+@t)!int+void"));
+	 	cppTokenMatchers[ControlWord].setPattern(string("if+else+while+for")); // Control words
+		cppTokenMatchers[TypeDef].setPattern(string("int+float+double+long(@b+@n+@t)!double+long(@b+@n+@t)!long+unsigned(@b+@n+@t)!int+void+class+struct+namespace"));
 	 	cppTokenMatchers[KeyWord].setPattern(string("return+break+continue+const+constptr+virtual+public+private+true+false+friend")); // KeyWord
 		cppTokenMatchers[Identifier].setPattern(string("([a-z]+[A-Z]+_)([a-z]+[A-Z]+[0-9]+_)*")); // Identifier
 		cppTokenMatchers[Blank].setPattern(string("(@b+@t+@n)!"));
@@ -52,6 +54,8 @@ namespace CPPLanguage{
 		cppTokenMatchers[EndLoop].setPattern(string("}")); //Loop
 		cppTokenMatchers[BeginClass].setPattern(string("{"));
 		cppTokenMatchers[EndClass].setPattern(string("}")); // Class
+		cppTokenMatchers[BeginNamespace].setPattern(string("{"));
+		cppTokenMatchers[EndNamespace].setPattern(string("}"));
 		cppTokenMatchers[BeginIf].setPattern(string("{"));
 		cppTokenMatchers[EndIf].setPattern(string("}")); // If
 		cppTokenMatchers[BeginFcn].setPattern(string("{"));
@@ -103,6 +107,13 @@ namespace CPPLanguage{
 				}
 			}
 		}
+	}
+
+	pair<TokenType, string> Lexer::LookAhead() {
+		int cur = position;
+		auto ret = GetNextToken();
+		position = cur;
+		return ret;
 	}
 
 	int Lexer::finish() const {

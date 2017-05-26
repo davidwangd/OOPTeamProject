@@ -5,7 +5,6 @@
 
 #include "FileProcessor.h"
 
-#include <set>
 #include <vector>
 #include <string>
 
@@ -26,7 +25,7 @@ public:
 private:
 	// Strings管理类实例持有的所有字符串。注意这字符串使用了std::string而非C风格的。
 	// process通过c_str获取指向C风格字符串的指针，并将之返回给用户。
-	std::set<std::string> Strings;
+	std::vector<std::string> Strings;
 };
 
 #endif /* end of include guard: OOP_TEAMWORK_CPPFILEPROCESSOR_H */
