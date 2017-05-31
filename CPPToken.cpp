@@ -5,6 +5,11 @@ using namespace std;
 using namespace CPPLanguage;
 
 int CPPToken::MaxId = -1;
+map<string, int> CPPToken::str2int = map<string, int>();
+
+void reduce(vector<const Token *>& tokens){
+	// TODO reduce the some magic work in tokens...
+}
 
 vector<const Token *> CPPTokenizer::process(const char *source){
 	lexer.Register(source);
@@ -139,5 +144,51 @@ vector<const Token *> CPPTokenizer::process(const char *source){
 
 		tokens.push_back(new CPPToken(ret));
 	}
+	reduce(tokens);
 	return tokens;
 }
+
+CPPToken::CPPToken(pair<TokenType, string> type, string idType, int id){
+	this -> type = type.first;
+	this -> str = type.second;
+	this -> idtype = idType;
+	this -> id = id;
+	this -> MaxId = max(MaxId, id);	
+	if (str2int.find(type.second) == str2int.end()){
+		str2int.insert(make_pair(type.second, str2int.size()));
+	}
+}
+
+int CPPToken::Equal(const Token *other) const {
+	CPPToken *rhs = (CPPToken *) other;
+	return this -> type == rhs -> type && this -> str == rhs -> str;
+}
+
+int CPPToken::ApproximateEqual(const Token *other) const {\
+	CPPToken *rhs = (CPPToken *) other;
+	return this -> type == rhs -> type 
+	 && this -> idtype == rhs -> idtype;
+}
+
+int CPPToken::Value() const {
+	return str2int[this -> str];
+}
+
+int CPPToken::MaxValue() const{
+	return str2int.size();
+}
+
+int CPPToken::ApproximateValue() const {
+	if (this -> type != Identifier){
+		return this -> type;
+	}
+	else{
+		if (this -> id == MaxId) return Identifier;
+		else return cppTokenTypeCount + this -> id;
+	}
+}
+
+int CPPToken::MaxApproximateValue() const {
+	return cppTokenTypeCount + this -> MaxId;
+}
+

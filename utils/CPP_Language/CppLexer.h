@@ -1,6 +1,8 @@
 #ifndef OOP_TEAMPROJECT_CPPLEXER_H
 #define OOP_TEAMPROJECT_CPPLEXER_H
 
+// coder : davidwang
+
 #include <stack>
 #include <string>
 
@@ -39,6 +41,7 @@ namespace CPPLanguage{
 		CloseParentheses,
 		Semicolon, //; 
 		Comma, // ,
+		Dot,
 		cppTokenTypeCount
 	};
 
@@ -46,7 +49,7 @@ namespace CPPLanguage{
 	class Lexer{
 	public:
 		// Register a string
-		Lexer();
+		Lexer() : position(0){}
 		void Register(const char *source);
 		std::pair<TokenType, std::string> GetNextToken();
 		std::pair<TokenType, std::string> LookAhead();

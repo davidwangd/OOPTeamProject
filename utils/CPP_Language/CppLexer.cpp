@@ -1,3 +1,4 @@
+// coder : davidwang
 #include "CppLexer.h"
 #include "../../utils/regex.h"
 using namespace std;
@@ -34,6 +35,7 @@ namespace CPPLanguage{
 		"CloseParentheses)",
 		"Semicolon;",
 		"Comma,",
+		"Dot.",
 		"ErrorType!!"
 	};
 
@@ -59,9 +61,9 @@ namespace CPPLanguage{
 		cppTokenMatchers[BeginFcn].setPattern(string("{"));
 		cppTokenMatchers[EndFcn].setPattern(string("}")); // Fcn
 		cppTokenMatchers[Namespace].setPattern(string("::")); // Namespace
-		cppTokenMatchers[Operator].setPattern(string("@++@*+@?+@/+->+-+:+%+&&+&+||+|+^")); // Operator
-		cppTokenMatchers[Number].setPattern(string("0+[1-9][0-9]*((e+E)[0-9]!)?(l?+(ll)?+L?+(LL)?+(ld)?+(LD)?+f?+F?)+[0-9]*.[0-9]*((e+E)[0-9]!)?f?"));
-		cppTokenMatchers[String].setPattern(string("\"[\"]*\"+'[']*'"));
+		cppTokenMatchers[Operator].setPattern(string("@!=+@!+==+@++@*+@?+@/+->+-+:+%+&&+&+||+|+^+<=+>=+<+>")); // Operator
+		cppTokenMatchers[Number].setPattern(string("0+[1-9][0-9]*((e+E)[0-9]!)?(l?+(ll)?+L?+(LL)?+(ld)?+(LD)?+f?+F?)+[0-9]!.[0-9]*((e+E)[0-9]!)?f?+.[0-9]!((e+E)[0-9]!)?f?"));
+		cppTokenMatchers[String].setPattern(string("\"([\"]+\\[-])*\"+'([']+\\[-])'"));
 		cppTokenMatchers[Assignment].setPattern(string("=+@+=+-=+@*=+@/=+%=")); // Assignment
 		cppTokenMatchers[OpenBracket].setPattern(string("["));
 		cppTokenMatchers[CloseBracket].setPattern(string("]"));
@@ -69,10 +71,12 @@ namespace CPPLanguage{
 		cppTokenMatchers[CloseParentheses].setPattern(string(")"));
 		cppTokenMatchers[Semicolon].setPattern(string(";"));
 		cppTokenMatchers[Comma].setPattern(string(","));
+		cppTokenMatchers[Dot].setPattern(string("."));
 	#ifdef DEBUG
 		fprintf(stderr, "Build Successfully!\n");
 	#endif
 	}
+	
 	void Lexer::Register(const char *source){
 		str = string(source);
 		position = 0;
