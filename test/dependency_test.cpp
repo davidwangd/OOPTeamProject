@@ -2,17 +2,14 @@
 
 #define DEBUG
 #include "../utils/dependency.cpp"
+#include "../CPPFileProcessor.cpp"
+#include <iostream>
+using namespace std;
 
 int main()
 {
-	FileDependencyGraph gr;
-
-	gr.AddFile("test_project/testmain.cpp");
-	gr.AddFile("test_project/testincl0.hpp");
-	gr.AddFile("test_project/testincl1.h");
-	gr.AddFile("test_project/testincl2.h");
-
-	gr.BuildGraph();
-	gr.MergeAll("test_project/testmain.cxx");
+	CPPFileProcessor cfp;
+	auto z = cfp.process("test_project");
+	cout << z << endl;
 	return 0;
 }

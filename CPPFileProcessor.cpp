@@ -10,6 +10,7 @@
 #include <io.h>
 #include <cstdio>
 #include <cstring>
+#include <stdexcept>
 
 using namespace std;
 
@@ -42,7 +43,7 @@ vector<string> GetCertainAttribute(const char* pathname, const char* attrib)
 	long hFile = 0;
 	_finddata_t fileInfo;
 	if ((hFile = _findfirst(path, &fileInfo)) == -1)
-		return;
+		return vector<string>();
 	do
 	{
 		if (fileInfo.attrib & _A_SUBDIR)   //这是一个文件夹，跳过
@@ -64,24 +65,27 @@ vector<string> GetCPPSources(const char* pathname)
 			path[i] = '/';
 	if (path[strlen(path) - 1] != '/')
 		strcat(path, "/");
+	string StrPath(path);
 	for (int i = 0; i < _AttribsCount; ++i)
 	{
 		auto res = GetCertainAttribute(path, _Attribs[i].c_str());
 		for (string FileName : res)
-			sources.push_back(FileName);
+			sources.push_back(StrPath + FileName);
 	}
 	return sources;
 }
 
 string ExtendTypedefs(string& source)
 {
-	//TODO
-	return source;
+	string res;
+
+	return res;
 }
 string ExtendConsts(string& source)
 {
-	//TODO
-	return source;
+	string res;
+	res = source;    //TODO
+	return res;
 }
 
 const char* CPPFileProcessor::process(const char* pathname)
@@ -93,24 +97,27 @@ const char* CPPFileProcessor::process(const char* pathname)
 	for (string FileName : FileList)
 		dg.AddFile(FileName);
 	dg.BuildGraph();
-	dg.MergeAll(TmpFile);
+	//dg.PrintGraph();
+	dg.MergeAll(TmpFile.c_str());
 
 	string _Command = "g++ -E " + TmpFile;
 	string Processed;
+	//cerr << _Command << endl;
 	FILE* proc = popen(_Command.c_str(), "r");
 	char buf[1024] = {0};
 	while (fgets(buf, 1024, proc) != NULL)
 		Processed = Processed + string(buf);
-	//正确性有待测试
+	fclose(proc);
+	remove(TmpFile.c_str());
 
 #ifdef DEBUG
-	ofstream _fout;
-	fout << Processed;
+	ofstream _fout("Processed.cxx");
+	_fout << Processed;
 	_fout.close();
 #endif
 
-	Processed = ExtendTypedefs(source);
-	Processed = ExtendConsts(source);
-	String.push_back(Processed);
-	return Processed.c_str();
+	Processed = ExtendTypedefs(Processed);
+	Processed = ExtendConsts(Processed);
+	Strings.push_back(Processed);
+	return Strings[Strings.size() - 1].c_str();
 }
