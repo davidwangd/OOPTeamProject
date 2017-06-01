@@ -5,38 +5,43 @@
 
 #include <stack>
 #include <string>
-
 namespace CPPLanguage{
 	enum TokenType{
-		ControlWord = 0,
-		TypeDef = 1,
-		KeyWord,
+		IgnoredWord = 0,
+		ControlWord ,  // break, continue, return
+		ConditionWord,  // if else 
+		LoopWord, // for do while
+		TypeDef,
+		Friend,
+		Virtual,
+		Const,
+		Case,
+		Catch,
+		Try,
+		Default,
+		Delete,
+		New,
+		Inline,
+		Private,
+		Public,
+		Protected,
+		Static,
+		Class,
+		Struct,
+		This,
+		Register,
 		Identifier,
 		Blank,
-		// 大括号， 用于模糊匹配
 		OpenBrace,
 		CloseBrace,
-		// 详细大括号
-		BeginLoop,
-		EndLoop,
-		BeginClass,
-		EndClass,
-		BeginNamespace,
-		EndNamespace,
-		BeginIf,
-		EndIf,
-		BeginFcn,
-		EndFcn,
 		Namespace, // ::
+		Colon,
 		Operator,
-		// += -= *= /=
 		Number,
 		String,
 		Assignment,
-		// 中括号
 		OpenBracket,
 		CloseBracket,
-		// 小括号
 		OpenParentheses,
 		CloseParentheses,
 		Semicolon, //; 
@@ -49,8 +54,8 @@ namespace CPPLanguage{
 	class Lexer{
 	public:
 		// Register a string
-		Lexer() : position(0){}
-		void Register(const char *source);
+		Lexer();
+		void Analysis(const char *source);
 		std::pair<TokenType, std::string> GetNextToken();
 		std::pair<TokenType, std::string> LookAhead();
 		int finish() const;

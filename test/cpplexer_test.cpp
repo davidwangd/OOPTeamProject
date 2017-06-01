@@ -19,7 +19,7 @@ int main(){
 	printf("%s\n", buff);
 	buff[cur] = 0;
 	Lexer lexer;
-	lexer.Register(buff);
+	lexer.Analysis(buff);
 	while (!lexer.finish()){
 		auto cur = lexer.GetNextToken();
 		printf("%s, %s\n", cppTokenNames[cur.first], cur.second.c_str());

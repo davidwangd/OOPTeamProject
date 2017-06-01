@@ -15,6 +15,9 @@ public:
 	virtual int ApproximateValue() const { return this -> c;} 
 	virtual int MaxValue() const { return 128; }
 	virtual int MaxApproximateValue() const { return 128; }
+	virtual int getType() const{
+		return (int)c;
+	}
 private:
 	char c;
 };

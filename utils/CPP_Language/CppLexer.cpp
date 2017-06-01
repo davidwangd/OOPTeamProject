@@ -7,24 +7,35 @@ namespace CPPLanguage{
 	int Lexer::matchersOKflag = 0;
 	Regex::RE cppTokenMatchers[cppTokenTypeCount];
 	const char* cppTokenNames[cppTokenTypeCount + 1] = {
+		"IgnoredWord",
 		"ControlWord",
+		"ConditionWord",
+		"LoopWord",
 		"TypeDef",
-		"KeyWord",
+		"Friend",
+		"Virtual",
+		"Const",
+		"Case",
+		"Catch",
+		"Try",
+		"Default",
+		"Delete",
+		"New",
+		"Inline",
+		"Private",
+		"Public",
+		"Protected",
+		"Static",
+		"Class",
+		"Struct",
+		"This",
+		"Register",
 		"Identifier",
 		"Blank",
 		"OpenBrace",
 		"CloseBrace",
-		"BeginLoop",
-		"EndLoop",
-		"BeginClass",
-		"EndClass",
-		"BeginNamespace",
-		"EndNamespace",
-		"BeginIf",
-		"EndIf",
-		"BeginFcn",
-		"EndFcn",
 		"Namespace::",
+		"Colon:",
 		"Operator",
 		"Number",
 		"String",
@@ -43,23 +54,15 @@ namespace CPPLanguage{
 	Lexer::Lexer(){
 		if (matchersOKflag) return;
 		matchersOKflag++;
-	 	cppTokenMatchers[ControlWord].setPattern(string("if+else+while+for")); // Control words
-		cppTokenMatchers[TypeDef].setPattern(string("int+float+double+long(@b+@n+@t)!double+long(@b+@n+@t)!long+unsigned(@b+@n+@t)!int+void+class+struct+namespace"));
-	 	cppTokenMatchers[KeyWord].setPattern(string("return+break+continue+const+constptr+virtual+public+private+true+false+friend")); // KeyWord
+		cppTokenMatchers[IgnoredWord].setPattern(string("`"));
+	 	cppTokenMatchers[ControlWord].setPattern(string("return+break+goto+continue")); // Control words
+	 	cppTokenMatchers[ConditionWord].setPattern(string("if+else"));
+	 	cppTokenMatchers[LoopWord].setPattern(string("do+while+for"));
+		cppTokenMatchers[TypeDef].setPattern(string("int+float+double+long(@b+@n+@t)!double+long(@b+@n+@t)!long+unsigned(@b+@n+@t)!int+void+void"));
 		cppTokenMatchers[Identifier].setPattern(string("([a-z]+[A-Z]+_)([a-z]+[A-Z]+[0-9]+_)*")); // Identifier
 		cppTokenMatchers[Blank].setPattern(string("(@b+@t+@n)!"));
 		cppTokenMatchers[OpenBrace].setPattern(string("{"));
 		cppTokenMatchers[CloseBrace].setPattern(string("}")); //Brace
-		cppTokenMatchers[BeginLoop].setPattern(string("{"));
-		cppTokenMatchers[EndLoop].setPattern(string("}")); //Loop
-		cppTokenMatchers[BeginClass].setPattern(string("{"));
-		cppTokenMatchers[EndClass].setPattern(string("}")); // Class
-		cppTokenMatchers[BeginNamespace].setPattern(string("{"));
-		cppTokenMatchers[EndNamespace].setPattern(string("}"));
-		cppTokenMatchers[BeginIf].setPattern(string("{"));
-		cppTokenMatchers[EndIf].setPattern(string("}")); // If
-		cppTokenMatchers[BeginFcn].setPattern(string("{"));
-		cppTokenMatchers[EndFcn].setPattern(string("}")); // Fcn
 		cppTokenMatchers[Namespace].setPattern(string("::")); // Namespace
 		cppTokenMatchers[Operator].setPattern(string("@!=+@!+==+@++@*+@?+@/+->+-+:+%+&&+&+||+|+^+<=+>=+<+>")); // Operator
 		cppTokenMatchers[Number].setPattern(string("0+[1-9][0-9]*((e+E)[0-9]!)?(l?+(ll)?+L?+(LL)?+(ld)?+(LD)?+f?+F?)+[0-9]!.[0-9]*((e+E)[0-9]!)?f?+.[0-9]!((e+E)[0-9]!)?f?"));
@@ -72,12 +75,19 @@ namespace CPPLanguage{
 		cppTokenMatchers[Semicolon].setPattern(string(";"));
 		cppTokenMatchers[Comma].setPattern(string(","));
 		cppTokenMatchers[Dot].setPattern(string("."));
+		cppTokenMatchers[Colon].setPattern(string(":"));
+		for (int i = Friend; i <= Register; i++){
+			string cur = cppTokenNames[i];
+			cur[0] = cur[0] - 'A' + 'a';
+			cppTokenMatchers[i].setPattern(cur);
+		}
+		position = 0;
 	#ifdef DEBUG
 		fprintf(stderr, "Build Successfully!\n");
 	#endif
 	}
 	
-	void Lexer::Register(const char *source){
+	void Lexer::Analysis(const char *source){
 		str = string(source);
 		position = 0;
 	}

@@ -10,12 +10,12 @@
 #include <vector>
 #include <map>
 
-
 // CPPToken type.. 
 class CPPToken : public Token{
 public:
+	friend class CPPTokenizer;
 	// type and id is provided when TokenType is Identifier.. before the first declaration of the identifier..
-	CPPToken(std::pair<CPPLanguage::TokenType, std::string> type, std::string idtype = std::string(""), int id = -1);
+	CPPToken(std::pair<CPPLanguage::TokenType, std::string> type);
 	virtual int Equal(const Token *other) const ;
 	virtual int ApproximateEqual(const Token *other) const;
 	virtual int Value() const;
@@ -23,14 +23,15 @@ public:
 	// This is also returned to help hash usage..
 	virtual int MaxValue() const;
 	virtual int MaxApproximateValue() const;
+	virtual int getType() const{
+		return (int)type;
+	}
 private:
 	CPPLanguage::TokenType type;
 	std::string str;
-	std::string idtype;
-	static int MaxId;
+
 	static std::map<std::string, int> str2int;
-	// to reserve the Token type
-	int id;
+	static int MaxId;
 };
 
 class CPPTokenizer : public Tokenizer {
@@ -41,6 +42,10 @@ public:
 		return tokens;
 	}
 private:
+	int shouldIgnore(CPPLanguage::TokenType type);
+	int shouldEmphises(CPPLanguage::TokenType type);
+	void reduce();
+	void eraseToken(int pos, int cnt);
 	std::map<std::string, int> id2int;
 	// This stack is to implement a simple Pushdown-automata,
 	std::stack<std::pair<CPPLanguage::TokenType, std::string> > Stack;
