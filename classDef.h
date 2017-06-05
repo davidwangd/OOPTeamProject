@@ -53,6 +53,9 @@ class Tokenizer{
 	virtual vector<const Token*> process(const char *source);
 	// 获得Tokens
 	virtual vector<const Token*> GetTokens() const;
+	
+	// 从 FileProcessor中获得字符串的信息。 value是该类定义的 InfoType中的信息。 -1 表示不会处理更多的信息
+	virtual int ProcessorInfo(const std::string &info, int valueType = -1);
 	Language GetLanguage() const;
 };
 

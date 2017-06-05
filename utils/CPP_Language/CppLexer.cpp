@@ -86,6 +86,10 @@ namespace CPPLanguage{
 		fprintf(stderr, "Build Successfully!\n");
 	#endif
 	}
+
+	void Lexer::registerTypeDef(const string &info){
+		cppTokenMatchers[TypeDef].setPattern(info + "+int+float+double+long(@b+@n+@t)!double+long(@b+@n+@t)!long+unsigned(@b+@n+@t)!int+void+void");	
+	}
 	
 	void Lexer::Analysis(const char *source){
 		str = string(source);

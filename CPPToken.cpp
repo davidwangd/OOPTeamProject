@@ -87,3 +87,11 @@ int CPPToken::MaxApproximateValue() const {
 	return (int)CPPLanguage::cppTokenTypeCount;
 }
 
+int CPPToken::ProcessorInfo(const string& info, int valueType){
+	if (valueType == -1){
+		lexer.registerTypeDef(info);
+		return 1;
+	}
+
+	return 0;
+}

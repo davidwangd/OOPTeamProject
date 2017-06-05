@@ -40,6 +40,9 @@ public:
 			delete x;
 		}
 	}
+	virtual int ProcessorInfo(const std::string& info, int valueType = -1){
+		return 1;
+	}
 protected:
 	std::vector<const Token *> tokens;
 };

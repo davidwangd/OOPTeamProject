@@ -59,6 +59,7 @@ namespace CPPLanguage{
 		std::pair<TokenType, std::string> GetNextToken();
 		std::pair<TokenType, std::string> LookAhead();
 		int finish() const;
+		void registerTypeDef(const std::string& info);
 	private:
 		// To process the saved tokens
 		std::stack<std::pair<TokenType, std::string>> Stack;

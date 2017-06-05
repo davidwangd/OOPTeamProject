@@ -41,6 +41,7 @@ public:
 	virtual std::vector<const Token *> GetTokens() const{
 		return tokens;
 	}
+	virtual int ProcessorInfo(const std::string& info, int valueType = -1);
 private:
 	int shouldIgnore(CPPLanguage::TokenType type);
 	int shouldEmphises(CPPLanguage::TokenType type);
