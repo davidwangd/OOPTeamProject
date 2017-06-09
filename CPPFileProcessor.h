@@ -19,6 +19,9 @@ public:
 	/// @param pathname 用户指定的路径。
 	/// @return 返回指向由类实例持有的C风格字符串的一个指针。
     const char* process(const char* pathname);
+	/// GetTypedefs函数返回所有由typedef定义的用户类型列表。
+	/// @return 由+字符连接的用户类型列表。
+	const char* GetTypedefs() { return TypedefRegEx.c_str(); }
 	/// GetLanguage返回枚举类型常量CPP。
 	Language GetLanguage() const { return CPP; }
 
@@ -26,6 +29,7 @@ private:
 	// Strings管理类实例持有的所有字符串。注意这字符串使用了std::string而非C风格的。
 	// process通过c_str获取指向C风格字符串的指针，并将之返回给用户。
 	std::vector<std::string> Strings;
+	std::string TypedefRegEx;
 };
 
 #endif /* end of include guard: OOP_TEAMWORK_CPPFILEPROCESSOR_H */
