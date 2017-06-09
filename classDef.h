@@ -46,20 +46,22 @@ class Token{
 	virtual int ApproximateValue() const;
 	Language GetLanguage() const;
 };
-
 class Tokenizer{
 	Tokenizer();
 	// 处理经过FileProccessor处理过的源代码
 	virtual vector<const Token*> process(const char *source);
 	// 获得Tokens
-	virtual vector<const Token*> GetTokens() const;
-	
+	virtual vector<const Token*> GetTokens() const;	
 	// 从 FileProcessor中获得字符串的信息。 value是该类定义的 InfoType中的信息。 -1 表示不会处理更多的信息
 	virtual int ProcessorInfo(const std::string &info, int valueType = -1);
 	Language GetLanguage() const;
 };
 
 class CPPTokenizer : public Tokenizer{
+
+};
+
+class CPPToken : public Token{
 
 };
 
@@ -84,3 +86,13 @@ class CPPPlagiarismDetector : public PlagiarismDector{
 };
 
 #endif /* end of include guard: OOP_TEAMWORK_CLASSDEF_H */
+
+class AClassName{
+public:
+	AClassName(){}
+	int i;
+	virtual void func(int i, int j) const;
+private:
+	static int cnt;
+	void *data;
+};

@@ -1,5 +1,5 @@
 SOURCES = $(wildcard *.cpp)
-OBJECTS = $(patsubst %.cpp, %.o, $(SOURCES))
+OBJECTS = $(patsubst %.cpp, ../%.o, $(SOURCES))
 CXXFLAGS = -std=c++11
 
 all: $(OBJECTS)

@@ -27,7 +27,6 @@ namespace CPPLanguage{
 		"Protected",
 		"Static",
 		"Class",
-		"Struct",
 		"This",
 		"Register",
 		"Identifier",
@@ -58,7 +57,7 @@ namespace CPPLanguage{
 	 	cppTokenMatchers[ControlWord].setPattern(string("return+break+goto+continue")); // Control words
 	 	cppTokenMatchers[ConditionWord].setPattern(string("if+else"));
 	 	cppTokenMatchers[LoopWord].setPattern(string("do+while+for"));
-		cppTokenMatchers[TypeDef].setPattern(string("int+float+double+long(@b+@n+@t)!double+long(@b+@n+@t)!long+unsigned(@b+@n+@t)!int+void+void"));
+		cppTokenMatchers[TypeDef].setPattern(string("char+int+float+double+long(@b+@n+@t)!double+long(@b+@n+@t)!long+unsigned(@b+@n+@t)!int+void+unsigned(@b+@n+@t)!long+unsigned(@b+@n+@t)!int+signed(@b+@n+@t)!int+(@b+@n+@t)!long+unsigned(@b+@n+@t)!long(@b+@n+@t)!long"));
 		cppTokenMatchers[Identifier].setPattern(string("([a-z]+[A-Z]+_)([a-z]+[A-Z]+[0-9]+_)*")); // Identifier
 		cppTokenMatchers[Blank].setPattern(string("(@b+@t+@n)!"));
 		cppTokenMatchers[OpenBrace].setPattern(string("{"));
@@ -77,6 +76,10 @@ namespace CPPLanguage{
 		cppTokenMatchers[Dot].setPattern(string("."));
 		cppTokenMatchers[Colon].setPattern(string(":"));
 		for (int i = Friend; i <= Register; i++){
+			if (i == Class){
+				cppTokenMatchers[i].setPattern("class+struct");
+				continue;
+			}
 			string cur = cppTokenNames[i];
 			cur[0] = cur[0] - 'A' + 'a';
 			cppTokenMatchers[i].setPattern(cur);

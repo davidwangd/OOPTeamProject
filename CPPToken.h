@@ -14,6 +14,10 @@
 class CPPToken : public Token{
 public:
 	friend class CPPTokenizer;
+#ifdef DEBUG_CPPTOKEN
+	// This is TokenTester class..
+	friend class TokenTester;
+#endif
 	// type and id is provided when TokenType is Identifier.. before the first declaration of the identifier..
 	CPPToken(std::pair<CPPLanguage::TokenType, std::string> type);
 	virtual int Equal(const Token *other) const ;
@@ -28,7 +32,6 @@ public:
 	}
 private:
 	CPPLanguage::TokenType type;
-	std::string str;
 
 	static std::map<std::string, int> str2int;
 	static int MaxId;

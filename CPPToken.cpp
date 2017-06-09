@@ -1,6 +1,7 @@
 // coder : davidwang
 #include "CPPToken.h"
 #include <memory.h>
+#include <iostream>
 using namespace std;
 using namespace CPPLanguage;
 
@@ -39,6 +40,7 @@ vector<const Token *> CPPTokenizer::process(const char *source){
 
 	while (!lexer.finish()){
 		auto ret = lexer.GetNextToken();
+		
 		// for Blank, We simply Drop them
 		if (shouldIgnore(ret.first)){
 			continue;
@@ -87,7 +89,7 @@ int CPPToken::MaxApproximateValue() const {
 	return (int)CPPLanguage::cppTokenTypeCount;
 }
 
-int CPPToken::ProcessorInfo(const string& info, int valueType){
+int CPPTokenizer::ProcessorInfo(const string& info, int valueType){
 	if (valueType == -1){
 		lexer.registerTypeDef(info);
 		return 1;

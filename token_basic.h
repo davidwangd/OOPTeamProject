@@ -5,21 +5,24 @@
 #include <vector>
 
 class Token{
+#ifdef DEBUG_CPPTOKEN
+	friend class TokenTester;
+#endif
 public:
 	virtual ~Token() = default;
 	Token() = default;
-	Token(char c): c(c){} 
-	virtual int ApproximateEqual(const Token *other) const { return this -> c == other -> c; }
-	virtual int Equal(const Token *other) const { return this -> c == other -> c;}
-	virtual int Value() const { return this -> c; }
-	virtual int ApproximateValue() const { return this -> c;} 
+	Token(char c): str(c, 1){} 
+	virtual int ApproximateEqual(const Token *other) const { return this -> str == other -> str; }
+	virtual int Equal(const Token *other) const { return this -> str == other -> str;}
+	virtual int Value() const { return this -> str[0]; }
+	virtual int ApproximateValue() const { return this -> str[0];} 
 	virtual int MaxValue() const { return 128; }
 	virtual int MaxApproximateValue() const { return 128; }
 	virtual int getType() const{
-		return (int)c;
+		return (int)str[0];
 	}
-private:
-	char c;
+protected:
+	std::string str;
 };
 
 class Tokenizer{

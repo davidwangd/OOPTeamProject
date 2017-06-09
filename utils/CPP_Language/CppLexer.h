@@ -27,7 +27,6 @@ namespace CPPLanguage{
 		Protected,
 		Static,
 		Class,
-		Struct,
 		This,
 		Register,
 		Identifier,
