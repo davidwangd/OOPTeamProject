@@ -26,10 +26,9 @@ class CPPfileProcessor final: public FileProcessor{
 public:
 	CPPfileProcessor();
 	~CPPfileProcessor();
-	const char *process(const char *pathname);
+	const char* process(const char *pathname);
 	const char* GetTypedefs();
 	Language GetLanguage() const;
-
 private:
 	std::vector<std::string> Strings;
 	std::string TypedefRegEx;

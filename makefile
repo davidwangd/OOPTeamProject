@@ -1,11 +1,6 @@
-SOURCES = $(wildcard *.cpp)
-OBJECTS = $(patsubst %.cpp, %.o, $(SOURCES))
-CXXFLAGS = -std=c++11
+all: main
 
-all: $(OBJECTS)
+CXXFLAGS = -std=c++11 -g
 
-clean:
-	rm -f *.o
-
-clean2:
-	del *.o
+main: main.o CPPFileProcessor.o CPPToken.o CPPDetector.o Analysis.o utils/utils.a
+	g++ $^ -o $@ $(CXXFLAGS)   

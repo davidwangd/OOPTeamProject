@@ -91,7 +91,7 @@ namespace CPPLanguage{
 	}
 
 	void Lexer::registerTypeDef(const string &info){
-		cppTokenMatchers[TypeDef].setPattern(info + "+int+float+double+long(@b+@n+@t)!double+long(@b+@n+@t)!long+unsigned(@b+@n+@t)!int+void+void");	
+		cppTokenMatchers[TypeDef].setPattern(info + "+char+int+float+double+long(@b+@n+@t)!double+long(@b+@n+@t)!long+unsigned(@b+@n+@t)!int+void+unsigned(@b+@n+@t)!long+unsigned(@b+@n+@t)!int+signed(@b+@n+@t)!int+(@b+@n+@t)!long+unsigned(@b+@n+@t)!long(@b+@n+@t)!long");	
 	}
 	
 	void Lexer::Analysis(const char *source){

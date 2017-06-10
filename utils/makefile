@@ -1,11 +1,14 @@
-SOURCES = $(wildcard *.cpp)
-OBJECTS = $(patsubst %.cpp, ../%.o, $(SOURCES))
-CXXFLAGS = -std=c++11
+all: utils.a
 
-all: $(OBJECTS)
+CXXFLAGS = -O2 -std=c++11
 
-clean:
-	rm -f *.o
+SOURCES = dependency.cpp dependency.h regex.cpp regex.h CPP_Language/CPPLexer.cpp CPP_Language/CPPLexer.h
+utils.a: dependency.o regex.o lexer.o
+	ar r utils.a dependency.o regex.o lexer.o
 
-clean2:
-	del *.o
+dependency.o: dependency.cpp
+
+regex.o: regex.cpp
+
+lexer.o: CPP_Language/CPPLexer.cpp
+	g++  $(CXXFLAGS) CPP_Language/CPPLexer.cpp -c -o lexer.o
