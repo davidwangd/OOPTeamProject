@@ -176,7 +176,7 @@ const char* CPPFileProcessor::process(const char* pathname)
 	while (fgets(buf, 2048, proc) != NULL)
 		if (buf[0] != '\n' && buf[0] != '#')
 			Processed = Processed + buf;
-	fclose(proc);
+	pclose(proc);
 	remove(TmpFile.c_str());
 
 	Processed = DeleteTypedefs(Processed, TypedefRegEx);
