@@ -167,5 +167,8 @@ const char* CPPFileProcessor::process(const char* pathname)
 
 	Processed = DeleteTypedefs(Processed, TypedefRegEx);
 	Strings.push_back(Processed);
+#ifdef DEBUG
+	fprintf(stderr, "Process %s finished.\n", pathname);
+#endif
 	return Strings[Strings.size() - 1].c_str();
 }

@@ -42,12 +42,9 @@ void FileDependencyGraph::BuildGraph()
 			++Line;
 			if (!fin)
 				break;
-			stringstream ss;
-			ss << buf;
-			getline(ss, tmp);
-			if (tmp.substr(0, 8) == "#include")
+			if (buf.substr(0, 8) == "#include")
 			{
-				tmp = Trim(tmp.substr(8));
+				tmp = Trim(buf.substr(8));
 				if (tmp[0] == '<' && tmp[tmp.size() - 1] == '>')
 					continue;
 				tmp = tmp.substr(1, tmp.size() - 2);
