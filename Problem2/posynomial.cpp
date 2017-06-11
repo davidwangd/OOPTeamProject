@@ -1,41 +1,52 @@
-/*-------------calculate posynomial-------------*/
-#include <iostream>
-#include <cstdlib>
-#include <cstring>
-#include <cmath>
+#include<cstdlib>
+#include<iostream>
+#include<exception>
 #include "func.h"
+#include<math.h>
+typedef double ddd;
 using namespace std;
-#define eps 1e-9
-
-double direct_posynomial(int argc, char* args[]) {
-	//double xn = atof(args[argc-1]), x = 1.0;
-	double xn = atof(args[argc-1]);
-	if (fabs(xn) < eps) {
-		cout << "Polynomial Function: x cannot be equal to 0!" << endl;
-		return 0;
+ddd posynomial(int argc,char* argv[],bool flag)//flag表示算法选择
+{
+	if(flag == 1)//使用秦九韶算法
+	{
+		ddd sum;
+		sum = 0;
+		ddd x;
+		x = atof(argv[argc-1]);
+		try//判断分母是否为0
+		{
+			if(x==0)
+				throw "Math Error";
+		}
+		catch(const char* &e)
+		{
+			cout << e << endl;
+			return 0;
+		}
+		for(int i=argc-2;i>0;i--)
+		{
+			sum /= x;
+			sum += atof(argv[i]);
+		}
+		return sum;
 	}
-	xn = 1/xn;
-	double sum = 0;
-	for (int i=1; i<argc-1; i++) {
-		double x = 1.0;
-		for (int j=0; j<i; j++)
-			x *= xn;
-		sum += atof(args[i])*x;
+	else if(!flag)//使用暴力方法
+	{
+		ddd sum=0;
+		ddd x=atof(argv[argc-1]);
+		try
+		{
+			if(x==0)
+				throw "Math Error";
+		}
+		catch(const char* &e)
+		{
+			std::cout<<e<<std::endl;
+			return 0;
+		}
+		for(int i=argc-2;i>=1;i--)
+			sum+=atof(argv[i])/pow(x,i-1);
+		return sum;
 	}
-	//cout << "Polynomial Function: " << sum << endl;
-	return sum;
-}
-
-double qin_posynomial(int argc, char* args[]) {
-	double xn = atof(args[argc-1]);
-	if (fabs(xn) < eps) {
-		cout << "Polynomial Function: x cannot be equal to 0!" << endl;
-		return 0;
-	}
-	xn = 1/xn;
-	double sum = 0;
-	for (int i=argc-2; i>=1; i--)
-		sum = sum*xn+atof(args[i]);
-	//cout << "Polynomial Function: " << sum << endl;
-	return sum;
+	return 0;
 }

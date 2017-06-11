@@ -27,7 +27,7 @@ int main(int argc, char *argv[]){
 	}
 	int m;
 	fprintf(stderr, "Please Enter the Threshold of detector word. 20 is default: ");
-	if (scanf("%d", &m) == EOF){
+	if (scanf("%d", &m) != EOF){
 		detector -> setValue(m);
 	}else{
 		detector -> setValue(20);

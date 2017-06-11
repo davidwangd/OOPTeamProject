@@ -1,30 +1,28 @@
-/*-------------calculate polynomial-------------*/
-#include <iostream>
-#include <cstdlib>
-#include <cstring>
+#include<cstdlib>
+#include<iostream>
 #include "func.h"
-using namespace std;
-
-double direct_polynomial(int argc, char* args[]) {
-	//double xn = atof(args[argc-1]), x = 1.0;
-	double xn = atof(args[argc-1]);
-	double sum = 0;
-	for (int i=1; i<argc-1; i++) {
-		double x = 1.0;
-		for (int j=1; j<i; j++)
-			x *= xn;
-		sum += atof(args[i])*x;
-		//x *= xn;
+#include<math.h>
+typedef double ddd;
+ddd polynomial(int argc,char* argv[],bool flag)//flag表示算法的选择
+{
+	if(flag)//使用秦九韶算法
+	{
+		ddd sum=0;
+		ddd x=atof(argv[argc-1]);
+		for(int i=argc-2;i>0;i--)
+		{
+			sum*=x;
+			sum+=atof(argv[i]);
+		}
+		return sum;
 	}
-	//cout << "Polynomial Function: " << sum << endl;
-	return sum;
-}
-
-double qin_polynomial(int argc, char* args[]) {
-	double xn = atof(args[argc-1]);
-	double sum = 0;
-	for (int i=argc-2; i>=1; i--)
-		sum = sum*xn+atof(args[i]);
-	//cout << "Polynomial Function: " << sum << endl;
-	return sum;
+	else//使用暴力方法
+	{
+		ddd sum=0;
+		ddd x = atof(argv[argc-1]);
+		for(int i = argc - 2 ; i > 0; --i)
+			sum += atof(argv[i]) * pow(x, i-1);
+		return sum;
+	}
+	return 0;
 }
