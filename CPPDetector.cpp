@@ -40,7 +40,8 @@ std::pair<double, double> CPPPlagiarismDetector::check(const char *path1, const 
 
 	fprintf(stderr, "\n\n");
 	for (int i = 0;i < ret1.size();i++){
-		fprintf(stderr, "%d,%d\n", ret1[i]->Equal(ret2[i]), ret1[i]->ApproximateEqual(ret2[i]));
+		if (!ret1[i]->Equal(ret2[i]))
+			fprintf(stderr, "%d,%d\n", ret1[i]->Equal(ret2[i]), ret1[i]->ApproximateEqual(ret2[i]));
 	}
 #endif
 
