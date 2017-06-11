@@ -28,7 +28,7 @@ vector<string> GetCertainAttribute(const char* pathname, const char* attrib)
     _findclose(hFile);
 	return res;
 }
-vector<string> GetSources(const char* pathname, string Attribs[], int Count)
+vector<string> GetSources(const char* pathname, const string Attribs[], int Count)
 {
 	vector<string> sources;
 	char path[512] = {0};

@@ -16,7 +16,7 @@
 using namespace std;
 
 const int FileNameLength = 8;
-string _Attribs[] = {".cpp", ".cxx", ".c", ".cc", ".h", ".hpp", ".hxx"};
+const string _Attribs[] = {".cpp", ".cxx", ".c", ".cc", ".h", ".hpp", ".hxx"};
 const int _AttribsCount = 7;
 
 string RandomFileName()
