@@ -42,6 +42,7 @@ void FileDependencyGraph::BuildGraph()
 			++Line;
 			if (!fin)
 				break;
+			buf = Trim(buf);
 			if (buf.substr(0, 8) == "#include")
 			{
 				tmp = Trim(buf.substr(8));
@@ -72,6 +73,7 @@ void FileDependencyGraph::Extend(ofstream& os, int v)
 	while (fin)
 	{
 		getline(fin, buf);
+		buf = Trim(buf);
 		++Line;
 		if (!fin)
 			break;
@@ -82,10 +84,7 @@ void FileDependencyGraph::Extend(ofstream& os, int v)
 				++i;
 				continue;
 			}
-		stringstream ss;
-		ss << buf;
-		ss >> tmp;
-		if (tmp != "#include")
+		if (buf.substr(0, 8) != "#include")
 			os << buf << endl;
 	}
 	fin.close();
