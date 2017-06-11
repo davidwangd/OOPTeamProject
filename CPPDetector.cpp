@@ -1,5 +1,12 @@
 #include "CPPDetector.h"
 #include "analyzer.h"
+#ifdef DEBUG
+#include "utils/CPP_Language/CppLexer.h"
+
+namespace CPPLanguage{
+	extern const char* cppTokenNames[cppTokenTypeCount + 1];
+}
+#endif
 std::pair<double, double> CPPPlagiarismDetector::check(const char *path1, const char *path2){
 	FileProcessor *processor1 = new CPPFileProcessor();
 	FileProcessor *processor2 = new CPPFileProcessor();
@@ -33,8 +40,12 @@ std::pair<double, double> CPPPlagiarismDetector::check(const char *path1, const 
 
 #ifdef DEBUG
 	fprintf(stderr, "Tokneizer2 Finshed!\n");
+	FILE *curr1 = fopen("re1.txt", "w");
+	for (auto c: ret1){
+		fprintf(curr1, "[%s][%s]", CPPLanguage::cppTokenNames[c->ApproximateValue()], c->str.c_str());
+	}
+	fclose(curr1);
 #endif
-
 	
 	Analyzer* analyzer = new Analyzer();
 	analyzer -> set_M(m_value);

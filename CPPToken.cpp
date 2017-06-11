@@ -42,9 +42,7 @@ vector<const Token *> CPPTokenizer::process(const char *source){
 		auto ret = lexer.GetNextToken();
 		
 		// for Blank, We simply Drop them
-		if (shouldIgnore(ret.first)){
-			continue;
-		}else{
+		if (!shouldIgnore(ret.first)){
 			tokens.push_back(new CPPToken(ret));
 			if (shouldEmphises(ret.first)){
 				tokens.push_back(new CPPToken(ret));

@@ -6,8 +6,8 @@
 #include <string>
 
 class Token{
-#ifdef DEBUG_CPPTOKEN
-	friend class TokenTester;
+#ifdef DEBUG
+	friend class CPPPlagiarismDetector;
 #endif
 public:
 	virtual ~Token() = default;
