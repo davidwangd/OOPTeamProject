@@ -26,9 +26,7 @@ public:
 	Language GetLanguage() const { return CPP; }
 
 private:
-	// Strings管理类实例持有的所有字符串。注意这字符串使用了std::string而非C风格的。
-	// process通过c_str获取指向C风格字符串的指针，并将之返回给用户。
-	std::vector<std::string> Strings;
+	// TypedefRegEx存储被typedef定义的新类型列表。
 	std::string TypedefRegEx;
 };
 

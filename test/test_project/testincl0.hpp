@@ -9,4 +9,3 @@ typedef struct Vec2
 	int x;
 	int y;
 };
-// 蛤蛤蛤蛤蛤

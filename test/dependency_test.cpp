@@ -1,8 +1,8 @@
 // coder : gaoj
 
 #define DEBUG
-#include "../utils/dependency.cpp"
-#include "../CPPFileProcessor.cpp"
+#include "../utils/dependency.h"
+#include "../CPPFileProcessor.h"
 #include <iostream>
 using namespace std;
 
