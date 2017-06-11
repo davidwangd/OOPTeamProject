@@ -1,12 +1,6 @@
 //coder : jxt
-#include "CPPToken.h"
+#include "token_basic.h"
 #include "Analyzer.h"
-using namespace std;
-
-bool cmpp(int a,int b)
-{
-	return HB[a]<HB[b];
-}
 
 double Analyzer::Hash()
 {
@@ -29,8 +23,8 @@ double Analyzer::Hash()
 	for(int i=1;i<=M;i++)Mi=(long long)Mi*Ad%Mo;
 	
 	int ha,tot;
-	int *HA; int *B; int **Loca;
-	HA=new int[Lena-M+2];HB=new int[Lenb-M+2];B=new int[Lenb-M+2];
+	int *HA; int *HB; St *B; int **Loca;
+	HA=new int[Lena-M+2];HB=new int[Lenb-M+2];B=new St[Lenb-M+2];
 	tot=0;
 	HH.clear();
 	for(int i=1;i<=Lmax-M+1;i++){
@@ -47,15 +41,18 @@ double Analyzer::Hash()
 			HA[i]=HH[ha];
 		}
 	}
-	for(int i=1;i<=Lenb-M+1;i++)B[i]=i;
-	sort(B+1,B+Lenb-M,cmpp);
+	for(int i=1;i<=Lenb-M+1;i++){
+		B[i].id=i;
+		B[i].hs=HB[i];
+	}
+	sort(B+1,B+Lenb-M);
 	Loca=new int*[tot+1];
 	for(int i=1;i<=tot;i++){
 		Loca[i]=new int[2];
 		Loca[i][0]=Loca[i][1]=0;
 	}
-	for(int i=1;i<=Lenb-M+1;i++)if(Loca[HB[B[i]]][0]==0)Loca[HB[B[i]]][0]=i;
-	for(int i=Lenb-M+1;i>=1;i--)if(Loca[HB[B[i]]][1]==0)Loca[HB[B[i]]][1]=i;
+	for(int i=1;i<=Lenb-M+1;i++)if(Loca[HB[B[i].hs]][0]==0)Loca[HB[B[i].hs]][0]=i;
+	for(int i=Lenb-M+1;i>=1;i--)if(Loca[HB[B[i].hs]][1]==0)Loca[HB[B[i].hs]][1]=i;
 	delete Hasha; delete Hashb;
 	
 	int Max,Len,Ans,Ms;
@@ -68,24 +65,24 @@ double Analyzer::Hash()
 	do{
 		Max=M;
 		for(int i=1;i<=Lena-M+1;i++)if(Marka[i]==0&&Loca[HA[i]][0]!=0){
-			for(int j=Loca[HA[i]][0];j<=Loca[HA[i]][1];j++)if(Markb[B[j]]==0){
+			for(int j=Loca[HA[i]][0];j<=Loca[HA[i]][1];j++)if(Markb[B[j].id]==0){
 				Len=1;
-				while(i+Len<=Lena&&B[j]+Len<=Lenb&&Marka[i+Len]==0&&Markb[B[j]+Len]==0&&Ha[i+Len-1]==Hb[B[j]+Len-1])Len++;
+				while(i+Len<=Lena&&B[j].id+Len<=Lenb&&Marka[i+Len]==0&&Markb[B[j].id+Len]==0&&Ha[i+Len-1]==Hb[B[j].id+Len-1])Len++;
 				if(Len>Max){
 					Max=Len;
 					Ms=1;
-					Match[1][0]=i;Match[1][1]=B[j];
+					Match[1][0]=i;Match[1][1]=B[j].id;
 				}
 				else if(Len==Max){
 					p=true;
 					for(int k=1;k<=Ms;k++){
 						if(i>=Match[k][0]&&i<=Match[k][0]+Len-1)p=false;
-						if(B[j]>=Match[k][0]&&B[j]<=Match[k][0]+Len-1)p=false;
+						if(B[j].id>=Match[k][0]&&B[j].id<=Match[k][0]+Len-1)p=false;
 					}
 					if(p){
 						Ms++;
 						Match[Ms][0]=i;
-						Match[Ms][1]=B[j];
+						Match[Ms][1]=B[j].id;
 					}
 				}
 			}
@@ -105,7 +102,7 @@ double Analyzer::Hash()
 	return (double)Ans*2.0/(double)(Lena+Lenb);
 }
 
-pd Analyzer::check(const vector<Token *> &A,const vector<Token *> &B)
+pd Analyzer::check(const vector<const Token *> &A,const vector<const Token *> &B)
 {
 	pd AA;
 	int Lena,Lenb,Lmax;
@@ -113,13 +110,13 @@ pd Analyzer::check(const vector<Token *> &A,const vector<Token *> &B)
 	Ha.clear();
 	Hb.clear();
 	for(int i=0;i<Lmax;i++){
-		if(i<Lena)Ha.push_back(A[i].Value());
-		if(i<Lenb)Hb.push_back(B[i].Value());
+		if(i<Lena)Ha.push_back(A[i]->Value());
+		if(i<Lenb)Hb.push_back(B[i]->Value());
 	}
 	AA.first=Hash();
 	for(int i=0;i<Lmax;i++){
-		if(i<Lena)Ha[i]=A[i].ApproximateValue();
-		if(i<Lenb)Hb[i]=B[i].ApproximateValue();
+		if(i<Lena)Ha[i]=A[i]->ApproximateValue();
+		if(i<Lenb)Hb[i]=B[i]->ApproximateValue();
 	}
 	AA.second=Hash();
 	return AA;

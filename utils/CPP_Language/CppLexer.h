@@ -15,7 +15,6 @@ namespace CPPLanguage{
 		Friend,
 		Virtual,
 		Const,
-		Case,
 		Catch,
 		Try,
 		Default,
@@ -27,6 +26,8 @@ namespace CPPLanguage{
 		Protected,
 		Static,
 		Class,
+		Switch,
+		Case,
 		This,
 		Register,
 		Identifier,
@@ -46,6 +47,7 @@ namespace CPPLanguage{
 		Semicolon, //; 
 		Comma, // ,
 		Dot,
+		Lemma,
 		cppTokenTypeCount
 	};
 

@@ -3,9 +3,9 @@ all: utils.a
 CXXFLAGS = -O2 -std=c++11
 
 SOURCES = dependency.cpp dependency.h regex.cpp regex.h CPP_Language/CPPLexer.cpp CPP_Language/CPPLexer.h
-utils.a: dependency.o regex.o lexer.o
-	ar r utils.a dependency.o regex.o lexer.o
-
+utils.a: dependency.o regex.o lexer.o FileEnumerator.o
+	ar r utils.a $^
+	
 dependency.o: dependency.cpp
 
 regex.o: regex.cpp

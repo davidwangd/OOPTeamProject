@@ -6,4 +6,8 @@
 *.cxx
 *.lib
 docs/
+1/
+2/
+in.txt
 *a
+Processed.cxx

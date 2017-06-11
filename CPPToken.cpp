@@ -91,7 +91,7 @@ int CPPToken::MaxApproximateValue() const {
 
 int CPPTokenizer::ProcessorInfo(const string& info, int valueType){
 	if (valueType == -1){
-		lexer.registerTypeDef(info);
+		if (info.length() != 0) lexer.registerTypeDef(info);
 		return 1;
 	}
 

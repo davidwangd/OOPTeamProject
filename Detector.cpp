@@ -1,6 +1,9 @@
 #include "Detector.h"
+#include "analyzer.h"
+#include "FileProcessor.h"
+#include "token_basic.h"
 
-std::pair<double, double> CPPPlagiarismDetector::check(const char *path1, const char *path2){
+std::pair<double, double> PlagiarismDetector::check(const char *path1, const char *path2){
 	FileProcessor *processor1 = new FileProcessor();
 	FileProcessor *processor2 = new FileProcessor();
 	Tokenizer *tokenizer1 = new Tokenizer();
@@ -12,15 +15,15 @@ std::pair<double, double> CPPPlagiarismDetector::check(const char *path1, const 
 	auto ret1 = tokenizer1 -> process(file1);
 	auto ret2 = tokenizer2 -> process(file2);
 
-	Analyser* analyser = new Analyser();
-	analyser -> set_M(m_value);
-	auto result = analyser -> analysis(ret1, ret2);
+	Analyzer* analyzer = new Analyzer();
+	analyzer -> set_M(m_value);
+	auto result = analyzer -> check(ret1, ret2);
 
 	delete processor1;
 	delete processor2;
 	delete tokenizer1;
 	delete tokenizer2;
-	delete analyser;
+	delete analyzer;
 	
 	return result;
 }
