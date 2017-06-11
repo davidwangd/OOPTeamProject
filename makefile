@@ -9,3 +9,9 @@ PlagiarismDetector.exe: main.o analyzer.o CPPDetector.o CPPFileProcessor.o CPPTo
 
 clean:
 	rm -f *.o *.exe
+
+utils/utils.a: utils/dependency.o utils/FileEnumerator.o utils/lexer.o utils/regex.o
+	ar r $@ $^
+
+utils/lexer.o: utils/CPP_Language/CppLexer.h utils/CPP_Language/CPPLexer.cpp 
+	g++ $(CXXFLAGS) utils/CPP_Language/CppLexer.cpp -c -o utils/lexer.o

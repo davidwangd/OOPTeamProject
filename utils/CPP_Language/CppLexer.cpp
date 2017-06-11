@@ -36,7 +36,6 @@ namespace CPPLanguage{
 		"Blank",
 		"OpenBrace",
 		"CloseBrace",
-		"Namespace::",
 		"Colon:",
 		"Operator",
 		"Number",
