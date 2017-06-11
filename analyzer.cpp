@@ -1,6 +1,7 @@
 //coder : jxt
 #include "CPPToken.h"
 #include "Analyzer.h"
+using namespace std;
 
 bool cmpp(int a,int b)
 {

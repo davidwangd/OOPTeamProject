@@ -12,3 +12,6 @@ regex.o: regex.cpp
 
 lexer.o: CPP_Language/CPPLexer.cpp
 	g++  $(CXXFLAGS) CPP_Language/CPPLexer.cpp -c -o lexer.o
+
+clean:
+	rm -f *.o *.a

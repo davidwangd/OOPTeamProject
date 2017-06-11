@@ -1,6 +1,8 @@
-all: main
+all: PlagiarismDetector.exe
 
+CXX = g++
+CC = g++
 CXXFLAGS = -std=c++11 -g
 
-main: main.o CPPFileProcessor.o CPPToken.o CPPDetector.o Analysis.o utils/utils.a
-	g++ $^ -o $@ $(CXXFLAGS)   
+PlagiarismDetector.exe: main.o analyzer.o CPPDetector.o CPPFileProcessor.o CPPToken.o utils/utils.a 
+	g++ $(CXXFLAGS) -o PlagiarismDetector.exe $^ 
