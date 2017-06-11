@@ -32,20 +32,6 @@ string RandomFileName()
 	return res;
 }
 
-string Trim(const string& str)
-{
-	int len = str.size(), i, j;
-	for (i = 0; i < len; ++i)
-		if (str[i] != ' ')
-			break;
-	for (j = len - 1; j >= i; --j)
-		if (str[j] != ' ')
-			break;
-	if (i > j)
-		return string("");
-	return str.substr(i, j - i + 1);
-}
-
 string GetTypedefined(string& src)
 {
     string t = Trim(src.substr(7));

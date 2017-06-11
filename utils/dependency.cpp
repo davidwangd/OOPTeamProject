@@ -1,6 +1,7 @@
 // coder : gaoj
 
 #include "../utils/dependency.h"
+#include "../utils/FileEnumerator.h"
 #include <sstream>
 #include <queue>
 #include <algorithm>
@@ -43,10 +44,10 @@ void FileDependencyGraph::BuildGraph()
 				break;
 			stringstream ss;
 			ss << buf;
-			ss >> tmp;
-			if (tmp == "#include")
+			getline(ss, tmp);
+			if (tmp.substr(0, 8) == "#include")
 			{
-				ss >> tmp;
+				tmp = Trim(tmp.substr(8));
 				if (tmp[0] == '<' && tmp[tmp.size() - 1] == '>')
 					continue;
 				tmp = tmp.substr(1, tmp.size() - 2);
