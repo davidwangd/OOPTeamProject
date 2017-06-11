@@ -6,3 +6,6 @@ CXXFLAGS = -std=c++11 -g
 
 PlagiarismDetector.exe: main.o analyzer.o CPPDetector.o CPPFileProcessor.o CPPToken.o utils/utils.a 
 	g++ $(CXXFLAGS) -o PlagiarismDetector.exe $^ 
+
+clean:
+	rm -f *.o *.exe

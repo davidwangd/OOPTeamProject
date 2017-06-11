@@ -3,6 +3,7 @@
 // author : davidwang
 #include <cstdio>
 #include <vector>
+#include <string>
 
 class Token{
 #ifdef DEBUG_CPPTOKEN
