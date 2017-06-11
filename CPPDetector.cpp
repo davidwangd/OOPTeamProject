@@ -33,16 +33,6 @@ std::pair<double, double> CPPPlagiarismDetector::check(const char *path1, const 
 
 #ifdef DEBUG
 	fprintf(stderr, "Tokneizer2 Finshed!\n");
-
-	for (int i = 0;i < ret2.size(); i++){
-		fprintf(stderr, "%d,%d", ret2[i]->Value(), ret2[i]->ApproximateValue());
-	}
-
-	fprintf(stderr, "\n\n");
-	for (int i = 0;i < ret1.size();i++){
-		if (!ret1[i]->Equal(ret2[i]))
-			fprintf(stderr, "%d,%d\n", ret1[i]->Equal(ret2[i]), ret1[i]->ApproximateEqual(ret2[i]));
-	}
 #endif
 
 	

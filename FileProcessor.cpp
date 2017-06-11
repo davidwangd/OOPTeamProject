@@ -10,7 +10,7 @@
 
 using namespace std;
 
-string _AllAttrib[] = { "" };
+const string _AllAttrib[] = { "" };
 const int _AllAttribCount = 1;
 
 const char* FileProcessor::process(const char *pathname)
