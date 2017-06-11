@@ -24,6 +24,8 @@ namespace CPPLanguage{
 		"Private",
 		"Public",
 		"Protected",
+		"Using",
+		"Namespace",
 		"Static",
 		"Class",
 		"Switch",

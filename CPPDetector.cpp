@@ -45,6 +45,12 @@ std::pair<double, double> CPPPlagiarismDetector::check(const char *path1, const 
 		fprintf(curr1, "[%s][%s]", CPPLanguage::cppTokenNames[c->ApproximateValue()], c->str.c_str());
 	}
 	fclose(curr1);
+
+	FILE* curr2 = fopen("re2.txt", "w");
+	for (auto c: ret2){
+		fprintf(curr2, "[%s][%s]", CPPLanguage::cppTokenNames[c->ApproximateValue()], c->str.c_str());
+	}
+	fclose(curr2);
 #endif
 	
 	Analyzer* analyzer = new Analyzer();

@@ -22,6 +22,10 @@ void CPPTokenizer::reduce(){
 			eraseToken(i, 2);
 			i--;
 		}
+		if (tokens[i]->getType() == Blank){
+			eraseToken(i, 1);
+			i--;
+		}
 	}
 }
 
