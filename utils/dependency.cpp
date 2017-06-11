@@ -4,8 +4,7 @@
 #include <sstream>
 #include <queue>
 #include <algorithm>
-
-#include <iostream>
+#include <cstdio>
 
 using namespace std;
 
@@ -57,7 +56,7 @@ void FileDependencyGraph::BuildGraph()
 					if (FileNodes[j] == Depend)
 						break;
 				if (j == FileNodes.size())
-					cerr << "Error: cannot find " << Depend << ", ignored" << endl;
+					fprintf(stderr, "Error: cannot find %s, ignored\n", Depend.c_str());
 				else
 					AddEdge(i, j, Line);
 			}
