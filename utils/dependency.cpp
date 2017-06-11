@@ -35,6 +35,7 @@ void FileDependencyGraph::BuildGraph()
 		string Directory = FileNodes[i].substr(0, len - j);
 
 		int Line = 0;
+
 		while (fin)
 		{
 			getline(fin, buf);
@@ -56,8 +57,9 @@ void FileDependencyGraph::BuildGraph()
 					if (FileNodes[j] == Depend)
 						break;
 				if (j == FileNodes.size())
-					throw "gaoj, dependency.cpp: unexpected error at BuildGraph";
-				AddEdge(i, j, Line);
+					cerr << "Error: cannot find " << Depend << ", ignored" << endl;
+				else
+					AddEdge(i, j, Line);
 			}
 		}
 		fin.close();
