@@ -6,6 +6,7 @@
 #include <queue>
 #include <algorithm>
 #include <cstdio>
+#include <iostream>
 
 using namespace std;
 
@@ -100,6 +101,7 @@ void FileDependencyGraph::MergeAll(const char* StoreTo)
 }
 
 #ifdef DEBUG
+
 void FileDependencyGraph::PrintGraph()
 {
 	for (int i = 0; i < FileNodes.size(); ++i)
