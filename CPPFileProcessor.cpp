@@ -23,7 +23,6 @@ string RandomFileName()
 {
 	char selection[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";
 	int len = strlen(selection);
-	srand(time(NULL));
 
 	string res;
 	for (int i = 0; i < FileNameLength; ++i)
@@ -133,13 +132,6 @@ string DeleteTypedefs(string& source, string& Typedefs)
 			i = j;
 		}
 	Typedefs = Typedefs.substr(0, Typedefs.size() - 1);
-
-#ifdef DEBUG
-	ofstream _fout("Processed.cxx");
-	_fout << res;
-	_fout.close();
-#endif
-
 	return res;
 }
 
@@ -169,6 +161,11 @@ const char* CPPFileProcessor::process(const char* pathname)
 	Strings.push_back(Processed);
 #ifdef DEBUG
 	fprintf(stderr, "Process %s finished.\n", pathname);
+
+	string _fout_str = "Processed_" + string(pathname) + ".cxx";
+	ofstream _fout(_fout_str.c_str());
+	_fout << Processed;
+	_fout.close();
 #endif
 	return Strings[Strings.size() - 1].c_str();
 }

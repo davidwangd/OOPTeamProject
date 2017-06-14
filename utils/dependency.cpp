@@ -36,7 +36,6 @@ void FileDependencyGraph::BuildGraph()
 		string Directory = FileNodes[i].substr(0, len - j);
 
 		int Line = 0;
-
 		while (fin)
 		{
 			getline(fin, buf);
@@ -47,17 +46,13 @@ void FileDependencyGraph::BuildGraph()
 			if (buf.substr(0, 8) == "#include")
 			{
 				tmp = Trim(buf.substr(8));
-				if (tmp[0] == '<' && tmp[tmp.size() - 1] == '>')
-					continue;
-				tmp = tmp.substr(1, tmp.size() - 2);
+				tmp = Trim(tmp.substr(1, tmp.size() - 2));
 				// 不考虑存在子目录的情况
 				string Depend = Directory + tmp;
 				for (j = 0; j < FileNodes.size(); ++j)
 					if (FileNodes[j] == Depend)
 						break;
-				if (j == FileNodes.size())
-					fprintf(stderr, "Error: cannot find %s, ignored\n", Depend.c_str());
-				else
+				if (j != FileNodes.size())
 					AddEdge(i, j, Line);
 			}
 		}

@@ -2,10 +2,12 @@
 #include "libs.h"
 #include <cstdio>
 #include <algorithm>
+#include <ctime>
 using namespace std;
 
 char buff1[1000], buff2[1000][1000];
 int main(int argc, char *argv[]){
+	srand(time(0));
 	for (int i = 1;i < argc;i++){
 		if (!strcmp(argv[i], "-f")) freopen(argv[++i], "r", stdin);
 		if (!strcmp(argv[i], "-o")) freopen(argv[++i], "w", stdout);

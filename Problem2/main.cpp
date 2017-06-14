@@ -53,7 +53,7 @@ int main (int argc, char *argv[])
 	double poly_imp=(time_poly_old-time_poly_new)/time_poly_old;//psdfsd率增长
 	double posy_imp=(time_posy_old-time_posy_new)/time_posy_old;//posyafsdabasd率增长
 	char buffer[1000];
-	sprintf(buffer,"Polysum_1:%g Polysum_2:%g Polysum improvement:%g%%\nPosysum_1:%g Posysum_2:%g Posy improvement:%g%%\n", 
+	sprintf(buffer,"Polysum_1:%g Polysum_2:%g Polysum improvement:%g%%\nPosysum_1:%g Posysum_2:%g Posy improvement:%g%%\n",
 		polysum1,polysum2,poly_imp*100,posysum1,posysum2,posy_imp*100);
 	cout<<buffer<<endl;
 	return 0;
