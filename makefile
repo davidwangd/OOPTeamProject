@@ -2,7 +2,7 @@ all: PlagiarismDetector.exe
 
 CXX = g++
 CC = g++
-CXXFLAGS = -std=c++11 -O2 -DDEBUG
+CXXFLAGS = -std=c++11 -O2
 
 PlagiarismDetector.exe: main.o analyzer.o CPPDetector.o CPPFileProcessor.o CPPToken.o utils/utils.a FileProcessor.o Detector.o
 	g++ $(CXXFLAGS) -o PlagiarismDetector.exe $^ 

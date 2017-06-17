@@ -15,21 +15,16 @@ double Analyzer::Hash()
 	Hashb=new int[Lenb+1];
 	Hasha[0]=Hashb[0]=0;
 	for(int i=1;i<=Lmax;i++){
-		if(i<=Lena){
-			Hasha[i]=((long long)Hasha[i-1]*Ad%Mo+Ha[i-1])%Mo;
-			Marka[i]=0;
-		}
-		if(i<=Lenb){
-			Hashb[i]=((long long)Hashb[i-1]*Ad%Mo+Hb[i-1])%Mo;
-			Markb[i]=0;
-		}
+		Marka[i]=Markb[i]=0;
+		Hasha[i]=((long long)Hasha[i-1]*Ad%Mo+Ha[i-1])%Mo;
+		Hashb[i]=((long long)Hashb[i-1]*Ad%Mo+Hb[i-1])%Mo;
 	}
 	Mi=1;
 	for(int i=1;i<=M;i++)Mi=(long long)Mi*Ad%Mo;
 	
 	int ha,tot;
 	int *HA; int *HB; St *B; int **Loca;
-	HA=new int[Lena-M+2];HB=new int[Lenb-M+4];B=new St[Lenb-M+4];
+	HA=new int[Lena-M+2];HB=new int[Lenb-M+2];B=new St[Lenb-M+2];
 	tot=0;
 	HH.clear();
 	for(int i=1;i<=Lmax-M+1;i++){
@@ -50,17 +45,14 @@ double Analyzer::Hash()
 		B[i].id=i;
 		B[i].hs=HB[i];
 	}
-	sort(B+1,B+Lenb-M+2);
-
+	sort(B+1,B+Lenb-M);
 	Loca=new int*[tot+1];
 	for(int i=1;i<=tot;i++){
 		Loca[i]=new int[2];
+		Loca[i][0]=Loca[i][1]=0;
 	}
-	for(int i=1;i<=tot;i++){
-		Loca[i][0]=0;Loca[i][1]=0;
-	}
-	for(int i=1;i<=Lenb-M+1;i++)if(Loca[B[i].hs][0]==0)Loca[B[i].hs][0]=i;
-	for(int i=Lenb-M+1;i>=1;i--)if(Loca[B[i].hs][1]==0)Loca[B[i].hs][1]=i;
+	for(int i=1;i<=Lenb-M+1;i++)if(Loca[HB[B[i].hs]][0]==0)Loca[HB[B[i].hs]][0]=i;
+	for(int i=Lenb-M+1;i>=1;i--)if(Loca[HB[B[i].hs]][1]==0)Loca[HB[B[i].hs]][1]=i;
 	delete Hasha; delete Hashb;
 	
 	int Max,Len,Ans,Ms;
@@ -105,9 +97,9 @@ double Analyzer::Hash()
 		Ms=0;
 	}while(Max>M);
 	delete Marka;delete Markb;delete HA;delete HB;delete B;
-	for(int i=1;i<=tot;i++)delete Loca[i]; delete Loca;
+	for(int i=0;i<=tot;i++)delete Loca[i]; delete Loca;
 	for(int i=0;i<=Lmax;i++)delete Match[i]; delete Match;
-	return (double)Ans/(double)min(Lena,Lenb);
+	return (double)Ans*2.0/(double)(Lena+Lenb);
 }
 
 pd Analyzer::check(const vector<const Token *> &A,const vector<const Token *> &B)
